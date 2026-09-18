@@ -1,4 +1,5 @@
 import os
+import time
 
 # ============================================================
 #  SETUP COMPLETO — RunPod Slim + ComfyUI + WAN 2.2
@@ -6,8 +7,10 @@ import os
 #  Autor: Roger
 # ============================================================
 
-BASE   = "/workspace/runpod-slim/ComfyUI/models"
-WF_DIR = "/workspace/runpod-slim/ComfyUI/user/default/workflows"
+COMFY  = "/workspace/runpod-slim/ComfyUI"
+BASE   = f"{COMFY}/models"
+WF_DIR = f"{COMFY}/user/default/workflows"
+NODES  = f"{COMFY}/custom_nodes"
 RAW    = "https://raw.githubusercontent.com/RogerSousaServidor/tiktokshop-sofii-hexx/main/workflows"
 
 # ── CRIAR PASTAS ─────────────────────────────────────────────
@@ -21,6 +24,24 @@ for pasta in [
     os.makedirs(pasta, exist_ok=True)
 
 print("📁 Pastas criadas!\n")
+
+# ── CUSTOM NODES ─────────────────────────────────────────────
+print("=" * 60)
+print("📦 INSTALANDO CUSTOM NODES")
+print("=" * 60)
+
+# WanVideoWrapper — contém Wan22FunControlToVideo
+wan_wrapper = f"{NODES}/ComfyUI-WanVideoWrapper"
+if os.path.exists(wan_wrapper):
+    print("\n⏭️  ComfyUI-WanVideoWrapper já instalado — atualizando...")
+    os.system(f"cd {wan_wrapper} && git pull")
+else:
+    print("\n⬇️  Instalando ComfyUI-WanVideoWrapper...")
+    os.system(f"cd {NODES} && git clone https://github.com/kijai/ComfyUI-WanVideoWrapper.git")
+
+print("\n📦 Instalando dependências do WanVideoWrapper...")
+os.system(f"pip install -r {wan_wrapper}/requirements.txt --break-system-packages -q")
+print("✅ Custom nodes prontos!")
 
 # ── LISTA DE MODELOS ─────────────────────────────────────────
 MODELS = [
@@ -97,11 +118,9 @@ WORKFLOWS = [
 # ── FUNÇÃO DE DOWNLOAD ────────────────────────────────────────
 def baixar(url, dest, nome, size=""):
     path = os.path.join(dest, nome)
-    if os.path.exists(path):
-        atual = os.path.getsize(path)
-        if atual > 1_000_000:  # maior que 1MB = válido
-            print(f"  ⏭️  Já existe: {nome} — pulando")
-            return
+    if os.path.exists(path) and os.path.getsize(path) > 1_000_000:
+        print(f"  ⏭️  Já existe: {nome} — pulando")
+        return
     print(f"  ⬇️  {nome} {f'({size})' if size else ''}")
     ret = os.system(f'wget -c --show-progress "{url}" -P "{dest}"')
     if ret == 0:
@@ -110,7 +129,7 @@ def baixar(url, dest, nome, size=""):
         print(f"  ❌ ERRO ao baixar {nome} — tente novamente")
 
 # ── DOWNLOAD MODELOS ──────────────────────────────────────────
-print("=" * 60)
+print("\n" + "=" * 60)
 print("🧠 BAIXANDO MODELOS")
 print("=" * 60)
 
@@ -133,8 +152,8 @@ print("\n" + "=" * 60)
 print("🔍 VERIFICANDO TUDO...")
 print("=" * 60)
 
-erros   = []
-ok      = []
+erros = []
+ok    = []
 
 for m in MODELS:
     path = os.path.join(m["dest"], m["name"])
@@ -142,16 +161,22 @@ for m in MODELS:
         size_gb = os.path.getsize(path) / (1024**3)
         ok.append(f"  ✅ {m['name']} ({size_gb:.1f} GB)")
     else:
-        erros.append(f"  ❌ FALTANDO: {m['name']} → {m['dest']}")
+        erros.append(f"  ❌ FALTANDO: {m['name']}")
 
 for wf in WORKFLOWS:
     path = os.path.join(WF_DIR, wf["name"])
     if os.path.exists(path):
         ok.append(f"  ✅ {wf['name']}")
     else:
-        erros.append(f"  ❌ FALTANDO: {wf['name']} → {WF_DIR}")
+        erros.append(f"  ❌ FALTANDO: {wf['name']}")
 
-print("\n📦 MODELOS E WORKFLOWS:\n")
+# Verificar custom node
+if os.path.exists(wan_wrapper):
+    ok.append(f"  ✅ ComfyUI-WanVideoWrapper (custom node)")
+else:
+    erros.append(f"  ❌ FALTANDO: ComfyUI-WanVideoWrapper")
+
+print("\n📦 RESULTADO:\n")
 for linha in ok:
     print(linha)
 
@@ -163,21 +188,25 @@ if erros:
 else:
     print(f"""
 {'=' * 60}
-🎉 TUDO CERTO! PRONTO PRA USAR!
+🎉 TUDO CERTO! REINICIANDO COMFYUI...
 {'=' * 60}
+""")
+    # Reiniciar ComfyUI pra ativar os custom nodes
+    os.system("pkill -f 'main.py'")
+    time.sleep(3)
+    os.system(f"cd {COMFY} && nohup python main.py --listen 0.0.0.0 --port 8188 > /tmp/comfyui.log 2>&1 &")
+    time.sleep(5)
+    print(f"""
+✅ ComfyUI reiniciado com custom nodes ativos!
 
-🚀 Acesse o ComfyUI:
-   http://localhost:8188
+🚀 Acesse: http://localhost:8188
 
-🎬 Seus workflows estão em:
-   Menu (≡) → Workflows → escolha o que quer usar
+🎬 Workflows disponíveis no menu:
+   1A — Divulgação COM vídeo de referência
+   1B — Divulgação SEM vídeo de referência
+   2  — Dancinha pra engajamento
 
-📋 Workflows disponíveis:
-   1A — Divulgação COM vídeo de referência (Fun Control)
-   1B — Divulgação SEM vídeo de referência (I2V puro)
-   2  — Dancinha pra engajamento e seguidores
-
-📸 Inputs necessários:
+📸 Inputs:
    1A e 2 → Foto da modelo + Vídeo de referência
    1B     → Foto da modelo + Prompt descritivo
 
