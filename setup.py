@@ -3,7 +3,6 @@ import time
 
 # ============================================================
 #  SETUP COMPLETO — RunPod Slim + ComfyUI + WAN 2.2
-#  Workflows: 1A | 1B | 2
 #  Autor: Roger
 # ============================================================
 
@@ -30,92 +29,118 @@ print("=" * 60)
 print("📦 INSTALANDO CUSTOM NODES")
 print("=" * 60)
 
-# WanVideoWrapper — contém Wan22FunControlToVideo
-wan_wrapper = f"{NODES}/ComfyUI-WanVideoWrapper"
-if os.path.exists(wan_wrapper):
-    print("\n⏭️  ComfyUI-WanVideoWrapper já instalado — atualizando...")
-    os.system(f"cd {wan_wrapper} && git pull")
-else:
-    print("\n⬇️  Instalando ComfyUI-WanVideoWrapper...")
-    os.system(f"cd {NODES} && git clone https://github.com/kijai/ComfyUI-WanVideoWrapper.git")
+CUSTOM_NODES = [
+    {
+        "name": "ComfyUI-WanVideoWrapper",
+        "repo": "https://github.com/kijai/ComfyUI-WanVideoWrapper.git",
+        "desc": "WAN 2.2 Fun Control + I2V"
+    },
+    {
+        "name": "ComfyUI-QwenTTS",
+        "repo": "https://github.com/1038lab/ComfyUI-QwenTTS.git",
+        "desc": "Voice Clone + TTS (voz da Sofii)"
+    },
+    {
+        "name": "ComfyUI-LatentSync-Node",
+        "repo": "https://github.com/iVideoGameBoss/ComfyUI-LatentSync-Node.git",
+        "desc": "Lip Sync (sincroniza a boca)"
+    },
+]
 
-print("\n📦 Instalando dependências do WanVideoWrapper...")
-os.system(f"pip install -r {wan_wrapper}/requirements.txt --break-system-packages -q")
-print("✅ Custom nodes prontos!")
+for node in CUSTOM_NODES:
+    path = f"{NODES}/{node['name']}"
+    print(f"\n→ {node['name']} ({node['desc']})")
+    if os.path.exists(path):
+        print(f"  ⏭️  Já instalado — atualizando...")
+        os.system(f"cd {path} && git pull")
+    else:
+        print(f"  ⬇️  Instalando...")
+        os.system(f"cd {NODES} && git clone {node['repo']}")
+    req = f"{path}/requirements.txt"
+    if os.path.exists(req):
+        print(f"  📦 Instalando dependências...")
+        os.system(f"pip install -r {req} --break-system-packages -q")
+    print(f"  ✅ Pronto!")
 
-# ── LISTA DE MODELOS ─────────────────────────────────────────
+# ── MODELOS ──────────────────────────────────────────────────
 MODELS = [
+    # COMPARTILHADOS
     {
         "name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
         "url":  "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors",
         "dest": f"{BASE}/text_encoders",
-        "size": "4.6 GB",
-        "used": "Todos"
+        "size": "4.6 GB", "used": "Todos"
     },
     {
         "name": "wan_2.1_vae.safetensors",
         "url":  "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors",
         "dest": f"{BASE}/vae",
-        "size": "0.5 GB",
-        "used": "Todos"
-    },
-    {
-        "name": "wan2.2_fun_control_high_noise_14B_fp8_scaled.safetensors",
-        "url":  "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_fun_control_high_noise_14B_fp8_scaled.safetensors",
-        "dest": f"{BASE}/diffusion_models",
-        "size": "14.3 GB",
-        "used": "1A e 2"
-    },
-    {
-        "name": "wan2.2_fun_control_low_noise_14B_fp8_scaled.safetensors",
-        "url":  "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_fun_control_low_noise_14B_fp8_scaled.safetensors",
-        "dest": f"{BASE}/diffusion_models",
-        "size": "14.3 GB",
-        "used": "1A e 2"
-    },
-    {
-        "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
-        "url":  "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
-        "dest": f"{BASE}/diffusion_models",
-        "size": "14.3 GB",
-        "used": "1B"
-    },
-    {
-        "name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
-        "url":  "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
-        "dest": f"{BASE}/diffusion_models",
-        "size": "14.3 GB",
-        "used": "1B"
+        "size": "0.5 GB", "used": "Todos"
     },
     {
         "name": "clip_vision_h.safetensors",
         "url":  "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors",
         "dest": f"{BASE}/clip_vision",
-        "size": "0.6 GB",
-        "used": "1B"
+        "size": "0.6 GB", "used": "T2V + 1B"
+    },
+    # FUN CONTROL (1A, 2, 3 cenas)
+    {
+        "name": "wan2.2_fun_control_high_noise_14B_fp8_scaled.safetensors",
+        "url":  "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_fun_control_high_noise_14B_fp8_scaled.safetensors",
+        "dest": f"{BASE}/diffusion_models",
+        "size": "14.3 GB", "used": "1A, 2 e 3 Cenas"
+    },
+    {
+        "name": "wan2.2_fun_control_low_noise_14B_fp8_scaled.safetensors",
+        "url":  "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_fun_control_low_noise_14B_fp8_scaled.safetensors",
+        "dest": f"{BASE}/diffusion_models",
+        "size": "14.3 GB", "used": "1A, 2 e 3 Cenas"
+    },
+    # I2V (1B e T2V)
+    {
+        "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+        "url":  "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+        "dest": f"{BASE}/diffusion_models",
+        "size": "14.3 GB", "used": "1B e T2V"
+    },
+    {
+        "name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+        "url":  "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+        "dest": f"{BASE}/diffusion_models",
+        "size": "14.3 GB", "used": "1B e T2V"
     },
 ]
 
-# ── LISTA DE WORKFLOWS ────────────────────────────────────────
+# ── WORKFLOWS ─────────────────────────────────────────────────
 WORKFLOWS = [
     {
         "name": "1A_divulgacao_produto_COM_referencia.json",
         "url":  f"{RAW}/1A_divulgacao_produto_COM_referencia.json",
-        "desc": "Divulgação COM vídeo de referência"
+        "desc": "Divulgação COM vídeo de referência (Fun Control)"
     },
     {
         "name": "1B_divulgacao_produto_SEM_referencia.json",
         "url":  f"{RAW}/1B_divulgacao_produto_SEM_referencia.json",
-        "desc": "Divulgação SEM vídeo de referência"
+        "desc": "Divulgação SEM vídeo de referência (I2V)"
     },
     {
         "name": "2_dancinha_engajamento_seguidores.json",
         "url":  f"{RAW}/2_dancinha_engajamento_seguidores.json",
         "desc": "Dancinha pra engajamento"
     },
+    {
+        "name": "tiktok_3_cenas_ids_reais.json",
+        "url":  f"{RAW}/tiktok_3_cenas_ids_reais.json",
+        "desc": "3 Cenas: Gancho + Corpo + CTA"
+    },
+    {
+        "name": "wan22_t2v_foto_voz.json",
+        "url":  f"{RAW}/wan22_t2v_foto_voz.json",
+        "desc": "T2V: Foto + Prompt + Voz + LipSync"
+    },
 ]
 
-# ── FUNÇÃO DE DOWNLOAD ────────────────────────────────────────
+# ── DOWNLOAD ──────────────────────────────────────────────────
 def baixar(url, dest, nome, size=""):
     path = os.path.join(dest, nome)
     if os.path.exists(path) and os.path.getsize(path) > 1_000_000:
@@ -126,19 +151,16 @@ def baixar(url, dest, nome, size=""):
     if ret == 0:
         print(f"  ✅ Salvo!")
     else:
-        print(f"  ❌ ERRO ao baixar {nome} — tente novamente")
+        print(f"  ❌ ERRO ao baixar {nome}")
 
-# ── DOWNLOAD MODELOS ──────────────────────────────────────────
 print("\n" + "=" * 60)
 print("🧠 BAIXANDO MODELOS")
 print("=" * 60)
 
-total = len(MODELS)
 for i, m in enumerate(MODELS, 1):
-    print(f"\n[{i}/{total}] Workflow: {m['used']}")
+    print(f"\n[{i}/{len(MODELS)}] Workflow: {m['used']}")
     baixar(m["url"], m["dest"], m["name"], m["size"])
 
-# ── DOWNLOAD WORKFLOWS ────────────────────────────────────────
 print("\n" + "=" * 60)
 print("🎬 BAIXANDO WORKFLOWS")
 print("=" * 60)
@@ -147,7 +169,7 @@ for wf in WORKFLOWS:
     print(f"\n  → {wf['desc']}")
     baixar(wf["url"], WF_DIR, wf["name"])
 
-# ── VERIFICAÇÃO FINAL ─────────────────────────────────────────
+# ── VERIFICAÇÃO ───────────────────────────────────────────────
 print("\n" + "=" * 60)
 print("🔍 VERIFICANDO TUDO...")
 print("=" * 60)
@@ -170,45 +192,40 @@ for wf in WORKFLOWS:
     else:
         erros.append(f"  ❌ FALTANDO: {wf['name']}")
 
-# Verificar custom node
-if os.path.exists(wan_wrapper):
-    ok.append(f"  ✅ ComfyUI-WanVideoWrapper (custom node)")
-else:
-    erros.append(f"  ❌ FALTANDO: ComfyUI-WanVideoWrapper")
+for node in CUSTOM_NODES:
+    if os.path.exists(f"{NODES}/{node['name']}"):
+        ok.append(f"  ✅ {node['name']}")
+    else:
+        erros.append(f"  ❌ FALTANDO: {node['name']}")
 
 print("\n📦 RESULTADO:\n")
 for linha in ok:
     print(linha)
 
 if erros:
-    print("\n⚠️  ATENÇÃO — Arquivos com problema:\n")
+    print("\n⚠️  ATENÇÃO — Problemas:\n")
     for e in erros:
         print(e)
-    print("\n💡 Rode o script novamente pra tentar baixar os que faltaram.")
+    print("\n💡 Rode o script de novo pra baixar o que faltou.")
 else:
-    print(f"""
-{'=' * 60}
-🎉 TUDO CERTO! REINICIANDO COMFYUI...
-{'=' * 60}
-""")
-    # Reiniciar ComfyUI pra ativar os custom nodes
+    print(f"\n{'=' * 60}")
+    print("🎉 TUDO CERTO! REINICIANDO COMFYUI...")
+    print(f"{'=' * 60}\n")
     os.system("pkill -f 'main.py'")
     time.sleep(3)
     os.system(f"cd {COMFY} && nohup python main.py --listen 0.0.0.0 --port 8188 > /tmp/comfyui.log 2>&1 &")
     time.sleep(5)
     print(f"""
-✅ ComfyUI reiniciado com custom nodes ativos!
+✅ ComfyUI reiniciado com tudo ativo!
 
 🚀 Acesse: http://localhost:8188
 
-🎬 Workflows disponíveis no menu:
-   1A — Divulgação COM vídeo de referência
-   1B — Divulgação SEM vídeo de referência
-   2  — Dancinha pra engajamento
-
-📸 Inputs:
-   1A e 2 → Foto da modelo + Vídeo de referência
-   1B     → Foto da modelo + Prompt descritivo
+🎬 Workflows disponíveis:
+   1A  — Divulgação COM vídeo de referência
+   1B  — Divulgação SEM vídeo de referência
+   2   — Dancinha pra engajamento
+   ⭐  tiktok_3_cenas — Gancho + Corpo + CTA
+   🆕  wan22_t2v_foto_voz — Foto + Prompt + Voz + LipSync
 
 {'=' * 60}
 """)

@@ -1,0 +1,1168 @@
+{
+  "id": "wan22-t2v-foto-voz-lipsync",
+  "revision": 1,
+  "last_node_id": 350,
+  "last_link_id": 550,
+  "version": 0.4,
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6,
+      "offset": [
+        0,
+        0
+      ]
+    }
+  },
+  "groups": [
+    {
+      "title": "📥 INPUTS — Foto + Prompt + Voz",
+      "bounding": [
+        0,
+        0,
+        700,
+        1200
+      ],
+      "color": "#1a4a1a",
+      "font_size": 18,
+      "flags": {}
+    },
+    {
+      "title": "🧠 MODELOS — Não mexa aqui",
+      "bounding": [
+        720,
+        0,
+        700,
+        600
+      ],
+      "color": "#1a1a4a",
+      "font_size": 18,
+      "flags": {}
+    },
+    {
+      "title": "⚙️ PROCESSAMENTO — WAN 2.2 T2V",
+      "bounding": [
+        1440,
+        0,
+        800,
+        1200
+      ],
+      "color": "#4a2a1a",
+      "font_size": 18,
+      "flags": {}
+    },
+    {
+      "title": "👄 LIP SYNC + OUTPUT",
+      "bounding": [
+        2260,
+        0,
+        700,
+        1200
+      ],
+      "color": "#4a1a1a",
+      "font_size": 18,
+      "flags": {}
+    }
+  ],
+  "nodes": [
+    {
+      "id": 300,
+      "type": "LoadImage",
+      "title": "📸 FOTO DE REFERÊNCIA — Sua modelo",
+      "pos": [
+        20,
+        60
+      ],
+      "size": [
+        320,
+        320
+      ],
+      "color": "#1a5a1a",
+      "bgcolor": "#0a3a0a",
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            500
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "SUA_FOTO_MODELO.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 301,
+      "type": "CLIPVisionLoader",
+      "title": "👁️ CLIP Vision — Entende a foto",
+      "pos": [
+        20,
+        420
+      ],
+      "size": [
+        320,
+        58
+      ],
+      "color": "#1a1a5a",
+      "bgcolor": "#0a0a3a",
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP_VISION",
+          "type": "CLIP_VISION",
+          "slot_index": 0,
+          "links": [
+            501
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPVisionLoader",
+        "models": [
+          {
+            "name": "clip_vision_h.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors",
+            "directory": "clip_vision"
+          }
+        ]
+      },
+      "widgets_values": [
+        "clip_vision_h.safetensors"
+      ]
+    },
+    {
+      "id": 302,
+      "type": "CLIPTextEncode",
+      "title": "✏️ PROMPT — ESCREVA AQUI O QUE QUER QUE ELA FAÇA",
+      "pos": [
+        20,
+        520
+      ],
+      "size": [
+        660,
+        200
+      ],
+      "color": "#1a5a1a",
+      "bgcolor": "#0a3a0a",
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 502
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            503
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "a beautiful woman gently holding a skincare product toward the camera, smiling naturally, soft lighting, smooth movement, looking at camera, UGC style, high quality 4k, realistic"
+      ]
+    },
+    {
+      "id": 303,
+      "type": "CLIPTextEncode",
+      "title": "🚫 PROMPT NEGATIVO — O que NÃO quer",
+      "pos": [
+        20,
+        750
+      ],
+      "size": [
+        660,
+        130
+      ],
+      "color": "#5a1a1a",
+      "bgcolor": "#3a0a0a",
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 504
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            505
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "blurry, low quality, distorted face, extra fingers, static, frozen, ugly, deformed, watermark, nsfw, cartoon, anime"
+      ]
+    },
+    {
+      "id": 304,
+      "type": "LoadAudio",
+      "title": "🎤 VOZ DA MODELO — Carregue o MP4 aqui",
+      "pos": [
+        20,
+        920
+      ],
+      "size": [
+        320,
+        80
+      ],
+      "color": "#4a1a4a",
+      "bgcolor": "#2a0a2a",
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "slot_index": 0,
+          "links": [
+            506
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadAudio"
+      },
+      "widgets_values": [
+        "VOZ_DA_MODELO.mp4"
+      ]
+    },
+    {
+      "id": 305,
+      "type": "QwenTTSVoiceClone",
+      "title": "🗣️ ESCREVA AQUI O QUE ELA VAI FALAR",
+      "pos": [
+        20,
+        1040
+      ],
+      "size": [
+        660,
+        200
+      ],
+      "color": "#4a1a4a",
+      "bgcolor": "#2a0a2a",
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "reference_audio",
+          "type": "AUDIO",
+          "link": 506
+        }
+      ],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "slot_index": 0,
+          "links": [
+            507
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "QwenTTSVoiceClone"
+      },
+      "widgets_values": [
+        "Gente, esse produto transformou minha pele em 7 dias! Corre lá no link da bio!",
+        "pt",
+        "Qwen3-TTS-0.6B",
+        1.0,
+        42
+      ]
+    },
+    {
+      "id": 310,
+      "type": "UNETLoader",
+      "title": "🧠 HIGH NOISE — I2V 14B",
+      "pos": [
+        740,
+        40
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "color": "#1a1a5a",
+      "bgcolor": "#0a0a3a",
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            508
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "directory": "diffusion_models"
+          }
+        ]
+      },
+      "widgets_values": [
+        "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 311,
+      "type": "UNETLoader",
+      "title": "🧠 LOW NOISE — I2V 14B",
+      "pos": [
+        740,
+        160
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "color": "#1a1a5a",
+      "bgcolor": "#0a0a3a",
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            509
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+            "directory": "diffusion_models"
+          }
+        ]
+      },
+      "widgets_values": [
+        "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 312,
+      "type": "CLIPLoader",
+      "title": "📝 Text Encoder — UMT5",
+      "pos": [
+        740,
+        280
+      ],
+      "size": [
+        340,
+        110
+      ],
+      "color": "#1a1a5a",
+      "bgcolor": "#0a0a3a",
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 0,
+          "links": [
+            502,
+            504
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader",
+        "models": [
+          {
+            "name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+            "directory": "text_encoders"
+          }
+        ]
+      },
+      "widgets_values": [
+        "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "wan",
+        "default"
+      ]
+    },
+    {
+      "id": 313,
+      "type": "VAELoader",
+      "title": "🎨 VAE — Wan 2.1",
+      "pos": [
+        740,
+        420
+      ],
+      "size": [
+        340,
+        58
+      ],
+      "color": "#1a1a5a",
+      "bgcolor": "#0a0a3a",
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 0,
+          "links": [
+            510,
+            511
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader",
+        "models": [
+          {
+            "name": "wan_2.1_vae.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors",
+            "directory": "vae"
+          }
+        ]
+      },
+      "widgets_values": [
+        "wan_2.1_vae.safetensors"
+      ]
+    },
+    {
+      "id": 320,
+      "type": "ModelSamplingSD3",
+      "title": "⚙️ Sampling HIGH NOISE",
+      "pos": [
+        1460,
+        40
+      ],
+      "size": [
+        260,
+        58
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 508
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            512
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingSD3"
+      },
+      "widgets_values": [
+        8.0
+      ]
+    },
+    {
+      "id": 321,
+      "type": "ModelSamplingSD3",
+      "title": "⚙️ Sampling LOW NOISE",
+      "pos": [
+        1460,
+        140
+      ],
+      "size": [
+        260,
+        58
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 509
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            513
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingSD3"
+      },
+      "widgets_values": [
+        8.0
+      ]
+    },
+    {
+      "id": 322,
+      "type": "WanImageToVideo",
+      "title": "⭐ WAN 2.2 I2V — Gera o vídeo com sua foto + prompt",
+      "pos": [
+        1460,
+        240
+      ],
+      "size": [
+        340,
+        210
+      ],
+      "color": "#6b1a1a",
+      "bgcolor": "#3a0f0f",
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 503
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 505
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 510
+        },
+        {
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 501
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 500
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            514,
+            515
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "slot_index": 1,
+          "links": [
+            516,
+            517
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "slot_index": 2,
+          "links": [
+            518,
+            519
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "WanImageToVideo"
+      },
+      "widgets_values": [
+        832,
+        480,
+        300,
+        1
+      ]
+    },
+    {
+      "id": 323,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler PASS 1 — High Noise",
+      "pos": [
+        1460,
+        480
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 512
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 514
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 516
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 518
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            520
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "enable",
+        42,
+        "randomize",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        0,
+        10,
+        "enable"
+      ]
+    },
+    {
+      "id": 324,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler PASS 2 — Low Noise (Refine)",
+      "pos": [
+        1460,
+        820
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 513
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 515
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 517
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 519
+        },
+        {
+          "name": "latent_image2",
+          "type": "LATENT",
+          "link": 520
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            521
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "disable",
+        0,
+        "fixed",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        10,
+        20,
+        "disable"
+      ]
+    },
+    {
+      "id": 330,
+      "type": "VAEDecode",
+      "title": "🎨 VAE Decode",
+      "pos": [
+        2280,
+        300
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 521
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 511
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            522
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 331,
+      "type": "CreateVideo",
+      "title": "🎬 Montar Vídeo",
+      "pos": [
+        2280,
+        400
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 522
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "slot_index": 0,
+          "links": [
+            523
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CreateVideo"
+      },
+      "widgets_values": [
+        30
+      ]
+    },
+    {
+      "id": 332,
+      "type": "LatentSyncNode",
+      "title": "👄 LipSync — Sincroniza boca com a voz",
+      "pos": [
+        2280,
+        500
+      ],
+      "size": [
+        380,
+        160
+      ],
+      "color": "#4a2a1a",
+      "bgcolor": "#2a1a0a",
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 523
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 507
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "slot_index": 0,
+          "links": [
+            524
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LatentSyncNode"
+      },
+      "widgets_values": [
+        25,
+        1.0,
+        42
+      ]
+    },
+    {
+      "id": 333,
+      "type": "SaveVideo",
+      "title": "💾 OUTPUT FINAL — Vídeo com voz sincronizada",
+      "pos": [
+        2280,
+        700
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "color": "#4a3a00",
+      "bgcolor": "#2a2000",
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 524
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveVideo"
+      },
+      "widgets_values": [
+        "video/t2v_com_voz",
+        "auto",
+        "auto"
+      ]
+    },
+    {
+      "id": 340,
+      "type": "Note",
+      "title": "📋 COMO USAR",
+      "pos": [
+        0,
+        1280
+      ],
+      "size": [
+        2900,
+        220
+      ],
+      "flags": {},
+      "order": 99,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "WORKFLOW T2V — FOTO + PROMPT + VOZ\n\n1. Node 300 (📸): Coloque a foto da sua modelo\n2. Node 302 (✏️): ESCREVA O QUE QUER QUE ELA FAÇA (movimento, expressão, ação)\n3. Node 304 (🎤): Carregue o MP4 com a voz da modelo\n4. Node 305 (🗣️): ESCREVA O QUE ELA VAI FALAR\n5. Clique em Executar\n\nRESULTADO: Video da sua modelo fazendo o que voce descreveu + falando o que voce escreveu!\nModelos: wan2.2_i2v_high/low_noise_14B + umt5 + vae + clip_vision + QwenTTS + LatentSync"
+      ]
+    }
+  ],
+  "links": [
+    [
+      500,
+      300,
+      0,
+      322,
+      4,
+      "IMAGE"
+    ],
+    [
+      501,
+      301,
+      0,
+      322,
+      3,
+      "CLIP_VISION"
+    ],
+    [
+      502,
+      312,
+      0,
+      302,
+      0,
+      "CLIP"
+    ],
+    [
+      503,
+      302,
+      0,
+      322,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      504,
+      312,
+      0,
+      303,
+      0,
+      "CLIP"
+    ],
+    [
+      505,
+      303,
+      0,
+      322,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      506,
+      304,
+      0,
+      305,
+      0,
+      "AUDIO"
+    ],
+    [
+      507,
+      305,
+      0,
+      332,
+      1,
+      "AUDIO"
+    ],
+    [
+      508,
+      310,
+      0,
+      320,
+      0,
+      "MODEL"
+    ],
+    [
+      509,
+      311,
+      0,
+      321,
+      0,
+      "MODEL"
+    ],
+    [
+      510,
+      313,
+      0,
+      322,
+      2,
+      "VAE"
+    ],
+    [
+      511,
+      313,
+      0,
+      330,
+      1,
+      "VAE"
+    ],
+    [
+      512,
+      320,
+      0,
+      323,
+      0,
+      "MODEL"
+    ],
+    [
+      513,
+      321,
+      0,
+      324,
+      0,
+      "MODEL"
+    ],
+    [
+      514,
+      322,
+      0,
+      323,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      515,
+      322,
+      0,
+      324,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      516,
+      322,
+      1,
+      323,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      517,
+      322,
+      1,
+      324,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      518,
+      322,
+      2,
+      323,
+      3,
+      "LATENT"
+    ],
+    [
+      519,
+      322,
+      2,
+      324,
+      3,
+      "LATENT"
+    ],
+    [
+      520,
+      323,
+      0,
+      324,
+      4,
+      "LATENT"
+    ],
+    [
+      521,
+      324,
+      0,
+      330,
+      0,
+      "LATENT"
+    ],
+    [
+      522,
+      330,
+      0,
+      331,
+      0,
+      "IMAGE"
+    ],
+    [
+      523,
+      331,
+      0,
+      332,
+      0,
+      "VIDEO"
+    ],
+    [
+      524,
+      332,
+      0,
+      333,
+      0,
+      "VIDEO"
+    ]
+  ]
+}
