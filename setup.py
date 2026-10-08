@@ -131,12 +131,17 @@ WORKFLOWS = [
     {
         "name": "tiktok_3_cenas_ids_reais.json",
         "url":  f"{RAW}/tiktok_3_cenas_ids_reais.json",
-        "desc": "3 Cenas: Gancho + Corpo + CTA"
+        "desc": "3 Cenas COM CHAINING: Gancho + Corpo + CTA (ultimo frame automatico)"
     },
     {
         "name": "wan22_t2v_foto_voz.json",
         "url":  f"{RAW}/wan22_t2v_foto_voz.json",
         "desc": "T2V: Foto + Prompt + Voz + LipSync"
+    },
+    {
+        "name": "tiktok_3_cenas_chaining.json",
+        "url":  f"{RAW}/tiktok_3_cenas_chaining.json",
+        "desc": "3 Cenas COM CHAINING automatico"
     },
 ]
 
