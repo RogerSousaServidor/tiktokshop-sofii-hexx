@@ -1,8 +1,8 @@
 {
  "id": "wan22-t2v-foto-voz-lipsync",
  "revision": 1,
- "last_node_id": 350,
- "last_link_id": 550,
+ "last_node_id": 351,
+ "last_link_id": 552,
  "version": 0.4,
  "config": {},
  "extra": {
@@ -296,7 +296,8 @@
      "type": "AUDIO",
      "slot_index": 0,
      "links": [
-      507
+      507,
+      552
      ]
     }
    ],
@@ -615,6 +616,14 @@
      "name": "start_image",
      "type": "IMAGE",
      "link": 500
+    },
+    {
+     "name": "length",
+     "type": "INT",
+     "widget": {
+      "name": "length"
+     },
+     "link": 551
     }
    ],
    "outputs": [
@@ -971,6 +980,52 @@
    "widgets_values": [
     "WORKFLOW T2V — FOTO + PROMPT + VOZ\n\n1. Node 300 (📸): Coloque a foto da sua modelo\n2. Node 302 (✏️): ESCREVA O QUE QUER QUE ELA FAÇA (movimento, expressão, ação)\n3. Node 304 (🎤): Carregue o MP4 com a voz da modelo\n4. Node 305 (🗣️): ESCREVA O QUE ELA VAI FALAR\n5. Clique em Executar\n\nRESULTADO: Video da sua modelo fazendo o que voce descreveu + falando o que voce escreveu!\nModelos: wan2.2_i2v_high/low_noise_14B + umt5 + vae + clip_vision + QwenTTS + LatentSync"
    ]
+  },
+  {
+   "id": 351,
+   "type": "AudioToVideoFrames",
+   "title": "⏱️ Duração do vídeo = duração do áudio (máx 901 = 30s)",
+   "pos": [
+    760,
+    1040
+   ],
+   "size": [
+    340,
+    110
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "audio",
+     "type": "AUDIO",
+     "link": 552
+    }
+   ],
+   "outputs": [
+    {
+     "name": "length",
+     "type": "INT",
+     "slot_index": 0,
+     "links": [
+      551
+     ]
+    },
+    {
+     "name": "seconds",
+     "type": "FLOAT",
+     "slot_index": 1,
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "AudioToVideoFrames"
+   },
+   "widgets_values": [
+    30,
+    901
+   ]
   }
  ],
  "links": [
@@ -1173,6 +1228,22 @@
    333,
    0,
    "VIDEO"
+  ],
+  [
+   551,
+   351,
+   0,
+   322,
+   5,
+   "INT"
+  ],
+  [
+   552,
+   305,
+   0,
+   351,
+   0,
+   "AUDIO"
   ]
  ]
 }

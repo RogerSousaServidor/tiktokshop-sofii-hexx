@@ -45,6 +45,9 @@ for nome, url, pip_req in CUSTOM_NODES:
         os.system(f"cd {NODES} && git clone {url}")
     if pip_req and os.path.exists(f"{p}/requirements.txt"):
         os.system(f"pip install -r {p}/requirements.txt --break-system-packages -q")
+# custom node local do repo: duracao do audio -> frames do video
+os.makedirs(f"{NODES}/audio_frames", exist_ok=True)
+os.system(f'wget -q -O "{NODES}/audio_frames/__init__.py" "https://raw.githubusercontent.com/RogerSousaServidor/tiktokshop-sofii-hexx/main/custom_nodes/audio_frames.py"')
 wan_wrapper = f"{NODES}/ComfyUI-WanVideoWrapper"
 print("✅ Custom nodes prontos!")
 
