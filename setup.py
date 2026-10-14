@@ -32,7 +32,7 @@ print("=" * 60)
 
 CUSTOM_NODES = [
     ("ComfyUI-WanVideoWrapper", "https://github.com/kijai/ComfyUI-WanVideoWrapper.git", True),
-    ("ComfyUI-FishAudioS2", "https://github.com/Saganaki22/ComfyUI-FishAudioS2.git", False),  # deps auto-instalam no startup
+    ("ComfyUI-FishAudioS2", "https://github.com/imshivamohan/comfyui-fishaudios2.git", False),  # repo original (Saganaki22) saiu do ar (404) em 2026-10-14; fork identico, mesmas classes de no (FishS2VoiceCloneTTS etc) — deps auto-instalam no startup
     ("ComfyUI-LatentSync-Node", "https://github.com/iVideoGameBoss/ComfyUI-LatentSync-Node.git", True),
 ]
 for nome, url, pip_req in CUSTOM_NODES:
