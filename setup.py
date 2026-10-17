@@ -42,7 +42,7 @@ for nome, url, pip_req in CUSTOM_NODES:
         os.system(f"cd {p} && git pull")
     else:
         print(f"\n⬇️  Instalando {nome}...")
-        os.system(f"cd {NODES} && git clone {url}")
+        os.system(f'cd {NODES} && git clone {url} "{nome}"')
     if pip_req and os.path.exists(f"{p}/requirements.txt"):
         os.system(f"pip install -r {p}/requirements.txt --break-system-packages -q")
 # custom node local do repo: duracao do audio -> frames do video
