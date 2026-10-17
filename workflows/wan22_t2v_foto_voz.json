@@ -2,7 +2,7 @@
  "id": "wan22-t2v-foto-voz-lipsync",
  "revision": 1,
  "last_node_id": 351,
- "last_link_id": 552,
+ "last_link_id": 554,
  "version": 0.4,
  "config": {},
  "extra": {
@@ -829,7 +829,7 @@
      "type": "IMAGE",
      "slot_index": 0,
      "links": [
-      522
+      553
      ]
     }
    ],
@@ -857,7 +857,7 @@
     {
      "name": "images",
      "type": "IMAGE",
-     "link": 522
+     "link": 554
     }
    ],
    "outputs": [
@@ -866,7 +866,7 @@
      "type": "VIDEO",
      "slot_index": 0,
      "links": [
-      523
+      524
      ]
     }
    ],
@@ -896,9 +896,9 @@
    "mode": 0,
    "inputs": [
     {
-     "name": "video",
-     "type": "VIDEO",
-     "link": 523
+     "name": "images",
+     "type": "IMAGE",
+     "link": 553
     },
     {
      "name": "audio",
@@ -908,11 +908,11 @@
    ],
    "outputs": [
     {
-     "name": "VIDEO",
-     "type": "VIDEO",
+     "name": "images",
+     "type": "IMAGE",
      "slot_index": 0,
      "links": [
-      524
+      554
      ]
     }
    ],
@@ -920,8 +920,6 @@
     "Node name for S&R": "D_LatentSyncNode"
    },
    "widgets_values": [
-    25,
-    1.0,
     42
    ]
   },
@@ -1206,24 +1204,8 @@
    "LATENT"
   ],
   [
-   522,
-   330,
-   0,
-   331,
-   0,
-   "IMAGE"
-  ],
-  [
-   523,
-   331,
-   0,
-   332,
-   0,
-   "VIDEO"
-  ],
-  [
    524,
-   332,
+   331,
    0,
    333,
    0,
@@ -1244,6 +1226,22 @@
    351,
    0,
    "AUDIO"
+  ],
+  [
+   553,
+   330,
+   0,
+   332,
+   0,
+   "IMAGE"
+  ],
+  [
+   554,
+   332,
+   0,
+   331,
+   0,
+   "IMAGE"
   ]
  ]
 }
