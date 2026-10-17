@@ -879,7 +879,7 @@
   },
   {
    "id": 332,
-   "type": "LatentSyncNode",
+   "type": "D_LatentSyncNode",
    "title": "👄 LipSync — Sincroniza boca com a voz",
    "pos": [
     2280,
@@ -917,7 +917,7 @@
     }
    ],
    "properties": {
-    "Node name for S&R": "LatentSyncNode"
+    "Node name for S&R": "D_LatentSyncNode"
    },
    "widgets_values": [
     25,
