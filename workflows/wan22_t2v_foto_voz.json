@@ -651,8 +651,7 @@
      "type": "LATENT",
      "slot_index": 2,
      "links": [
-      518,
-      519
+      518
      ]
     }
    ],
@@ -762,11 +761,6 @@
     },
     {
      "name": "latent_image",
-     "type": "LATENT",
-     "link": 519
-    },
-    {
-     "name": "latent_image2",
      "type": "LATENT",
      "link": 520
     }
@@ -1213,14 +1207,6 @@
    322,
    2,
    323,
-   3,
-   "LATENT"
-  ],
-  [
-   519,
-   322,
-   2,
-   324,
    3,
    "LATENT"
   ],
