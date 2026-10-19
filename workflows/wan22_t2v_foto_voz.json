@@ -1,8 +1,8 @@
 {
  "id": "wan22-t2v-foto-voz-lipsync",
  "revision": 1,
- "last_node_id": 351,
- "last_link_id": 554,
+ "last_node_id": 352,
+ "last_link_id": 556,
  "version": 0.4,
  "config": {},
  "extra": {
@@ -89,7 +89,8 @@
      "type": "IMAGE",
      "slot_index": 0,
      "links": [
-      500
+      500,
+      555
      ]
     },
     {
@@ -608,9 +609,9 @@
      "link": 510
     },
     {
-     "name": "clip_vision",
-     "type": "CLIP_VISION",
-     "link": 501
+     "name": "clip_vision_output",
+     "type": "CLIP_VISION_OUTPUT",
+     "link": 556
     },
     {
      "name": "start_image",
@@ -1024,6 +1025,50 @@
     30,
     901
    ]
+  },
+  {
+   "id": 352,
+   "type": "CLIPVisionEncode",
+   "title": "Codifica a foto p/ CLIP Vision (exigido pelo ComfyUI 0.30+)",
+   "pos": [
+    760,
+    480
+   ],
+   "size": [
+    300,
+    80
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip_vision",
+     "type": "CLIP_VISION",
+     "link": 501
+    },
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 555
+    }
+   ],
+   "outputs": [
+    {
+     "name": "CLIP_VISION_OUTPUT",
+     "type": "CLIP_VISION_OUTPUT",
+     "slot_index": 0,
+     "links": [
+      556
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPVisionEncode"
+   },
+   "widgets_values": [
+    "center"
+   ]
   }
  ],
  "links": [
@@ -1034,14 +1079,6 @@
    322,
    4,
    "IMAGE"
-  ],
-  [
-   501,
-   301,
-   0,
-   322,
-   3,
-   "CLIP_VISION"
   ],
   [
    502,
@@ -1242,6 +1279,30 @@
    331,
    0,
    "IMAGE"
+  ],
+  [
+   501,
+   301,
+   0,
+   352,
+   0,
+   "CLIP_VISION"
+  ],
+  [
+   555,
+   300,
+   0,
+   352,
+   1,
+   "IMAGE"
+  ],
+  [
+   556,
+   352,
+   0,
+   322,
+   3,
+   "CLIP_VISION_OUTPUT"
   ]
  ]
 }
