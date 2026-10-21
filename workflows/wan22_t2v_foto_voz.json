@@ -1,8 +1,8 @@
 {
   "id": "wan22-t2v-foto-voz-lipsync",
   "revision": 1,
-  "last_node_id": 352,
-  "last_link_id": 557,
+  "last_node_id": 361,
+  "last_link_id": 566,
   "version": 0.4,
   "config": {},
   "extra": {
@@ -256,7 +256,9 @@
           "type": "AUDIO",
           "slot_index": 0,
           "links": [
-            506
+            506,
+            558,
+            559
           ]
         }
       ],
@@ -270,7 +272,7 @@
     {
       "id": 305,
       "type": "AILab_Qwen3TTSVoiceClone",
-      "title": "🗣️ ESCREVA AQUI O QUE ELA VAI FALAR (Qwen3 TTS)",
+      "title": "🗣️ BLOCO 1 — texto (Qwen3 TTS)",
       "pos": [
         20,
         1040
@@ -297,9 +299,7 @@
           "type": "AUDIO",
           "slot_index": 0,
           "links": [
-            507,
-            552,
-            557
+            560
           ]
         }
       ],
@@ -312,7 +312,7 @@
         "Portuguese",
         "",
         true,
-        true,
+        false,
         -1,
         "fixed"
       ]
@@ -851,7 +851,7 @@
         {
           "name": "audio",
           "type": "AUDIO",
-          "link": 557
+          "link": 566
         }
       ],
       "outputs": [
@@ -897,7 +897,7 @@
         {
           "name": "audio",
           "type": "AUDIO",
-          "link": 507
+          "link": 564
         }
       ],
       "outputs": [
@@ -992,7 +992,7 @@
         {
           "name": "audio",
           "type": "AUDIO",
-          "link": 552
+          "link": 565
         }
       ],
       "outputs": [
@@ -1062,6 +1062,192 @@
       "widgets_values": [
         "center"
       ]
+    },
+    {
+      "id": 306,
+      "type": "AILab_Qwen3TTSVoiceClone",
+      "title": "🗣️ BLOCO 2 — texto (Qwen3 TTS)",
+      "pos": [
+        20,
+        1480
+      ],
+      "size": [
+        660,
+        420
+      ],
+      "color": "#4a1a4a",
+      "bgcolor": "#2a0a2a",
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "reference_audio",
+          "type": "AUDIO",
+          "link": 558
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "slot_index": 0,
+          "links": [
+            561
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AILab_Qwen3TTSVoiceClone"
+      },
+      "widgets_values": [
+        "Eu uso todo dia e a diferença apareceu logo na primeira semana.",
+        "1.7B",
+        "Portuguese",
+        "",
+        true,
+        false,
+        -1,
+        "fixed"
+      ]
+    },
+    {
+      "id": 307,
+      "type": "AILab_Qwen3TTSVoiceClone",
+      "title": "🗣️ BLOCO 3 — texto (Qwen3 TTS)",
+      "pos": [
+        20,
+        1920
+      ],
+      "size": [
+        660,
+        420
+      ],
+      "color": "#4a1a4a",
+      "bgcolor": "#2a0a2a",
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "reference_audio",
+          "type": "AUDIO",
+          "link": 559
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "slot_index": 0,
+          "links": [
+            563
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AILab_Qwen3TTSVoiceClone"
+      },
+      "widgets_values": [
+        "Clica no link da bio e garante o seu antes que acabe!",
+        "1.7B",
+        "Portuguese",
+        "",
+        true,
+        true,
+        -1,
+        "fixed"
+      ]
+    },
+    {
+      "id": 360,
+      "type": "AudioConcat",
+      "title": "🔗 Junta bloco 1 + 2",
+      "pos": [
+        720,
+        1480
+      ],
+      "size": [
+        300,
+        110
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio1",
+          "type": "AUDIO",
+          "link": 560
+        },
+        {
+          "name": "audio2",
+          "type": "AUDIO",
+          "link": 561
+        }
+      ],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "slot_index": 0,
+          "links": [
+            562
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AudioConcat"
+      },
+      "widgets_values": [
+        "after"
+      ]
+    },
+    {
+      "id": 361,
+      "type": "AudioConcat",
+      "title": "🔗 Junta (1+2) + 3 = ÁUDIO FINAL",
+      "pos": [
+        1060,
+        1480
+      ],
+      "size": [
+        300,
+        110
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio1",
+          "type": "AUDIO",
+          "link": 562
+        },
+        {
+          "name": "audio2",
+          "type": "AUDIO",
+          "link": 563
+        }
+      ],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "slot_index": 0,
+          "links": [
+            564,
+            565,
+            566
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AudioConcat"
+      },
+      "widgets_values": [
+        "after"
+      ]
     }
   ],
   "links": [
@@ -1111,14 +1297,6 @@
       0,
       305,
       0,
-      "AUDIO"
-    ],
-    [
-      507,
-      305,
-      0,
-      332,
-      1,
       "AUDIO"
     ],
     [
@@ -1242,14 +1420,6 @@
       "INT"
     ],
     [
-      552,
-      305,
-      0,
-      351,
-      0,
-      "AUDIO"
-    ],
-    [
       553,
       330,
       0,
@@ -1290,8 +1460,72 @@
       "CLIP_VISION_OUTPUT"
     ],
     [
-      557,
+      558,
+      304,
+      0,
+      306,
+      0,
+      "AUDIO"
+    ],
+    [
+      559,
+      304,
+      0,
+      307,
+      0,
+      "AUDIO"
+    ],
+    [
+      560,
       305,
+      0,
+      360,
+      0,
+      "AUDIO"
+    ],
+    [
+      561,
+      306,
+      0,
+      360,
+      1,
+      "AUDIO"
+    ],
+    [
+      562,
+      360,
+      0,
+      361,
+      0,
+      "AUDIO"
+    ],
+    [
+      563,
+      307,
+      0,
+      361,
+      1,
+      "AUDIO"
+    ],
+    [
+      564,
+      361,
+      0,
+      332,
+      1,
+      "AUDIO"
+    ],
+    [
+      565,
+      361,
+      0,
+      351,
+      0,
+      "AUDIO"
+    ],
+    [
+      566,
+      361,
       0,
       331,
       1,
