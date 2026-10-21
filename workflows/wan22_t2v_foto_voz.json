@@ -2,7 +2,7 @@
   "id": "wan22-t2v-foto-voz-lipsync",
   "revision": 1,
   "last_node_id": 352,
-  "last_link_id": 556,
+  "last_link_id": 557,
   "version": 0.4,
   "config": {},
   "extra": {
@@ -298,7 +298,8 @@
           "slot_index": 0,
           "links": [
             507,
-            552
+            552,
+            557
           ]
         }
       ],
@@ -853,6 +854,11 @@
           "name": "images",
           "type": "IMAGE",
           "link": 554
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 557
         }
       ],
       "outputs": [
@@ -1289,6 +1295,14 @@
       322,
       3,
       "CLIP_VISION_OUTPUT"
+    ],
+    [
+      557,
+      305,
+      0,
+      331,
+      1,
+      "AUDIO"
     ]
   ]
 }
