@@ -269,8 +269,8 @@
     },
     {
       "id": 305,
-      "type": "FishS2VoiceCloneTTS",
-      "title": "🗣️ ESCREVA AQUI O QUE ELA VAI FALAR (Fish Audio S2)",
+      "type": "AILab_Qwen3TTSVoiceClone",
+      "title": "🗣️ ESCREVA AQUI O QUE ELA VAI FALAR (Qwen3 TTS)",
       "pos": [
         20,
         1040
@@ -293,7 +293,7 @@
       ],
       "outputs": [
         {
-          "name": "AUDIO",
+          "name": "audio",
           "type": "AUDIO",
           "slot_index": 0,
           "links": [
@@ -304,24 +304,17 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "FishS2VoiceCloneTTS"
+        "Node name for S&R": "AILab_Qwen3TTSVoiceClone"
       },
       "widgets_values": [
-        "s2-pro",
         "Gente, esse produto transformou minha pele em 7 dias! Corre lá no link da bio!",
-        "pt",
-        "cuda",
-        "bfloat16",
-        "auto",
-        0,
-        200,
-        0.7,
-        0.7,
-        1.2,
-        42,
-        "randomize",
+        "1.7B",
+        "Portuguese",
+        "",
         true,
-        false
+        true,
+        -1,
+        "fixed"
       ]
     },
     {
