@@ -22,5 +22,28 @@ class AudioToVideoFrames:
         return (n, seconds)
 
 
-NODE_CLASS_MAPPINGS = {"AudioToVideoFrames": AudioToVideoFrames}
-NODE_DISPLAY_NAME_MAPPINGS = {"AudioToVideoFrames": "Audio → Video Frames (4n+1)"}
+class ResampleFrames:
+    """Reamostra frames de src_fps para dst_fps (indice mais proximo), mantendo a duracao real."""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {
+            "images": ("IMAGE",),
+            "src_fps": ("FLOAT", {"default": 32.0, "min": 1.0, "max": 240.0}),
+            "dst_fps": ("FLOAT", {"default": 25.0, "min": 1.0, "max": 240.0}),
+        }}
+
+    RETURN_TYPES = ("IMAGE",)
+    RETURN_NAMES = ("images",)
+    FUNCTION = "run"
+    CATEGORY = "image/batch"
+
+    def run(self, images, src_fps, dst_fps):
+        n = images.shape[0]
+        n_out = max(int(n * dst_fps / src_fps), 1)
+        idx = [min(int(i * src_fps / dst_fps), n - 1) for i in range(n_out)]
+        return (images[idx],)
+
+
+NODE_CLASS_MAPPINGS = {"AudioToVideoFrames": AudioToVideoFrames, "ResampleFrames": ResampleFrames}
+NODE_DISPLAY_NAME_MAPPINGS = {"AudioToVideoFrames": "Audio → Video Frames (4n+1)", "ResampleFrames": "Resample Frames (fps → fps)"}

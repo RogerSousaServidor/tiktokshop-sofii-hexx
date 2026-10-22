@@ -19,6 +19,8 @@ for pasta in [
     f"{BASE}/text_encoders",
     f"{BASE}/vae",
     f"{BASE}/clip_vision",
+    f"{BASE}/loras",
+    f"{BASE}/frame_interpolation",
     WF_DIR,
 ]:
     os.makedirs(pasta, exist_ok=True)
@@ -102,6 +104,27 @@ MODELS = [
         "dest": f"{BASE}/clip_vision",
         "size": "0.6 GB",
         "used": "1B"
+    },
+    {
+        "name": "wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors",
+        "url":  "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors",
+        "dest": f"{BASE}/loras",
+        "size": "1.2 GB",
+        "used": "T2V+voz (4 passos)"
+    },
+    {
+        "name": "wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
+        "url":  "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
+        "dest": f"{BASE}/loras",
+        "size": "1.2 GB",
+        "used": "T2V+voz (4 passos)"
+    },
+    {
+        "name": "film_net_fp16.safetensors",
+        "url":  "https://huggingface.co/Comfy-Org/frame_interpolation/resolve/main/frame_interpolation/film_net_fp16.safetensors",
+        "dest": f"{BASE}/frame_interpolation",
+        "size": "0.1 GB",
+        "used": "T2V+voz (interpolacao 16->32fps)"
     },
 ]
 
