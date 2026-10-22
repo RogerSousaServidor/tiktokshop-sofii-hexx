@@ -1,8 +1,8 @@
 {
   "id": "wan22-t2v-foto-voz-lipsync",
   "revision": 1,
-  "last_node_id": 361,
-  "last_link_id": 566,
+  "last_node_id": 522,
+  "last_link_id": 702,
   "version": 0.4,
   "config": {},
   "extra": {
@@ -180,7 +180,14 @@
           "type": "CONDITIONING",
           "slot_index": 0,
           "links": [
-            503
+            503,
+            567,
+            581,
+            595,
+            609,
+            623,
+            637,
+            651
           ]
         }
       ],
@@ -221,7 +228,14 @@
           "type": "CONDITIONING",
           "slot_index": 0,
           "links": [
-            505
+            505,
+            568,
+            582,
+            596,
+            610,
+            624,
+            638,
+            652
           ]
         }
       ],
@@ -473,7 +487,21 @@
           "slot_index": 0,
           "links": [
             510,
-            511
+            511,
+            569,
+            580,
+            583,
+            594,
+            597,
+            608,
+            611,
+            622,
+            625,
+            636,
+            639,
+            650,
+            653,
+            664
           ]
         }
       ],
@@ -519,7 +547,14 @@
           "type": "MODEL",
           "slot_index": 0,
           "links": [
-            512
+            512,
+            571,
+            585,
+            599,
+            613,
+            627,
+            641,
+            655
           ]
         }
       ],
@@ -558,7 +593,14 @@
           "type": "MODEL",
           "slot_index": 0,
           "links": [
-            513
+            513,
+            572,
+            586,
+            600,
+            614,
+            628,
+            642,
+            656
           ]
         }
       ],
@@ -572,7 +614,7 @@
     {
       "id": 322,
       "type": "WanImageToVideo",
-      "title": "⭐ WAN 2.2 I2V — Gera o vídeo com sua foto + prompt",
+      "title": "⭐ WAN 2.2 I2V — SEG 1 (121 frames)",
       "pos": [
         1460,
         240
@@ -611,14 +653,6 @@
           "name": "start_image",
           "type": "IMAGE",
           "link": 500
-        },
-        {
-          "name": "length",
-          "type": "INT",
-          "widget": {
-            "name": "length"
-          },
-          "link": 551
         }
       ],
       "outputs": [
@@ -655,7 +689,7 @@
       "widgets_values": [
         480,
         832,
-        901,
+        121,
         1
       ]
     },
@@ -712,7 +746,7 @@
       "widgets_values": [
         "enable",
         42,
-        "randomize",
+        "fixed",
         20,
         3.5,
         "euler",
@@ -818,7 +852,8 @@
           "type": "IMAGE",
           "slot_index": 0,
           "links": [
-            553
+            665,
+            680
           ]
         }
       ],
@@ -892,7 +927,7 @@
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 553
+          "link": 702
         },
         {
           "name": "audio",
@@ -970,7 +1005,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "WORKFLOW T2V — FOTO + PROMPT + VOZ\n\n1. Node 300 (📸): Coloque a foto da sua modelo\n2. Node 302 (✏️): ESCREVA O QUE QUER QUE ELA FAÇA (movimento, expressão, ação)\n3. Node 304 (🎤): Carregue o MP4 com a voz da modelo\n4. Node 305 (🗣️): ESCREVA O QUE ELA VAI FALAR\n5. Clique em Executar\n\nRESULTADO: Video da sua modelo fazendo o que voce descreveu + falando o que voce escreveu!\nModelos: wan2.2_i2v_high/low_noise_14B + umt5 + vae + clip_vision + QwenTTS + LatentSync"
+        "WORKFLOW T2V — FOTO + PROMPT + VOZ\n\n1. Node 300 (📸): Coloque a foto da sua modelo\n2. Node 302 (✏️): ESCREVA O QUE QUER QUE ELA FAÇA (movimento, expressão, ação)\n3. Node 304 (🎤): Carregue o MP4 com a voz da modelo\n4. Node 305 (🗣️): ESCREVA O QUE ELA VAI FALAR\n5. Clique em Executar\n\nRESULTADO: Video da sua modelo fazendo o que voce descreveu + falando o que voce escreveu!\nModelos: wan2.2_i2v_high/low_noise_14B + umt5 + vae + clip_vision + QwenTTS + LatentSync\n\nNOVO: vídeo gerado em 8 segmentos de 121 frames encadeados pelo último frame (cabe em 48GB); áudio = 3 blocos (305/306/307) unidos; vídeo final cortado no tamanho do áudio (máx 901 frames)."
       ]
     },
     {
@@ -1001,7 +1036,7 @@
           "type": "INT",
           "slot_index": 0,
           "links": [
-            551
+            701
           ]
         },
         {
@@ -1052,7 +1087,14 @@
           "type": "CLIP_VISION_OUTPUT",
           "slot_index": 0,
           "links": [
-            556
+            556,
+            570,
+            584,
+            598,
+            612,
+            626,
+            640,
+            654
           ]
         }
       ],
@@ -1248,6 +1290,2664 @@
       "widgets_values": [
         "after"
       ]
+    },
+    {
+      "id": 400,
+      "type": "WanImageToVideo",
+      "title": "⭐ WAN 2.2 I2V — SEG 2",
+      "pos": [
+        20,
+        2500
+      ],
+      "size": [
+        340,
+        210
+      ],
+      "color": "#6b1a1a",
+      "bgcolor": "#3a0f0f",
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 567
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 568
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 569
+        },
+        {
+          "name": "clip_vision_output",
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 570
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 666
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            573,
+            576
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "slot_index": 1,
+          "links": [
+            574,
+            577
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "slot_index": 2,
+          "links": [
+            575
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "WanImageToVideo"
+      },
+      "widgets_values": [
+        480,
+        832,
+        121,
+        1
+      ]
+    },
+    {
+      "id": 401,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P1 — SEG 2",
+      "pos": [
+        20,
+        2740
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 571
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 573
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 574
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 575
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            578
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "enable",
+        44,
+        "fixed",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        0,
+        10,
+        "enable"
+      ]
+    },
+    {
+      "id": 402,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P2 — SEG 2",
+      "pos": [
+        20,
+        3060
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 572
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 576
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 577
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 578
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            579
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "disable",
+        0,
+        "fixed",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        10,
+        20,
+        "disable"
+      ]
+    },
+    {
+      "id": 403,
+      "type": "VAEDecode",
+      "title": "🎨 VAE Decode — SEG 2",
+      "pos": [
+        20,
+        3380
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 579
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 580
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            667,
+            679
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 410,
+      "type": "WanImageToVideo",
+      "title": "⭐ WAN 2.2 I2V — SEG 3",
+      "pos": [
+        380,
+        2500
+      ],
+      "size": [
+        340,
+        210
+      ],
+      "color": "#6b1a1a",
+      "bgcolor": "#3a0f0f",
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 581
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 582
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 583
+        },
+        {
+          "name": "clip_vision_output",
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 584
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 668
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            587,
+            590
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "slot_index": 1,
+          "links": [
+            588,
+            591
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "slot_index": 2,
+          "links": [
+            589
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "WanImageToVideo"
+      },
+      "widgets_values": [
+        480,
+        832,
+        121,
+        1
+      ]
+    },
+    {
+      "id": 411,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P1 — SEG 3",
+      "pos": [
+        380,
+        2740
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 585
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 587
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 588
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 589
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            592
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "enable",
+        45,
+        "fixed",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        0,
+        10,
+        "enable"
+      ]
+    },
+    {
+      "id": 412,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P2 — SEG 3",
+      "pos": [
+        380,
+        3060
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 586
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 590
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 591
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 592
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            593
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "disable",
+        0,
+        "fixed",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        10,
+        20,
+        "disable"
+      ]
+    },
+    {
+      "id": 413,
+      "type": "VAEDecode",
+      "title": "🎨 VAE Decode — SEG 3",
+      "pos": [
+        380,
+        3380
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 593
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 594
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            669,
+            682
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 420,
+      "type": "WanImageToVideo",
+      "title": "⭐ WAN 2.2 I2V — SEG 4",
+      "pos": [
+        740,
+        2500
+      ],
+      "size": [
+        340,
+        210
+      ],
+      "color": "#6b1a1a",
+      "bgcolor": "#3a0f0f",
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 595
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 596
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 597
+        },
+        {
+          "name": "clip_vision_output",
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 598
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 670
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            601,
+            604
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "slot_index": 1,
+          "links": [
+            602,
+            605
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "slot_index": 2,
+          "links": [
+            603
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "WanImageToVideo"
+      },
+      "widgets_values": [
+        480,
+        832,
+        121,
+        1
+      ]
+    },
+    {
+      "id": 421,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P1 — SEG 4",
+      "pos": [
+        740,
+        2740
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 599
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 601
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 602
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 603
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            606
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "enable",
+        46,
+        "fixed",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        0,
+        10,
+        "enable"
+      ]
+    },
+    {
+      "id": 422,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P2 — SEG 4",
+      "pos": [
+        740,
+        3060
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 600
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 604
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 605
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 606
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            607
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "disable",
+        0,
+        "fixed",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        10,
+        20,
+        "disable"
+      ]
+    },
+    {
+      "id": 423,
+      "type": "VAEDecode",
+      "title": "🎨 VAE Decode — SEG 4",
+      "pos": [
+        740,
+        3380
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 607
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 608
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            671,
+            685
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 430,
+      "type": "WanImageToVideo",
+      "title": "⭐ WAN 2.2 I2V — SEG 5",
+      "pos": [
+        1100,
+        2500
+      ],
+      "size": [
+        340,
+        210
+      ],
+      "color": "#6b1a1a",
+      "bgcolor": "#3a0f0f",
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 609
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 610
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 611
+        },
+        {
+          "name": "clip_vision_output",
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 612
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 672
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            615,
+            618
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "slot_index": 1,
+          "links": [
+            616,
+            619
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "slot_index": 2,
+          "links": [
+            617
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "WanImageToVideo"
+      },
+      "widgets_values": [
+        480,
+        832,
+        121,
+        1
+      ]
+    },
+    {
+      "id": 431,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P1 — SEG 5",
+      "pos": [
+        1100,
+        2740
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 613
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 615
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 616
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 617
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            620
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "enable",
+        47,
+        "fixed",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        0,
+        10,
+        "enable"
+      ]
+    },
+    {
+      "id": 432,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P2 — SEG 5",
+      "pos": [
+        1100,
+        3060
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 614
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 618
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 619
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 620
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            621
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "disable",
+        0,
+        "fixed",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        10,
+        20,
+        "disable"
+      ]
+    },
+    {
+      "id": 433,
+      "type": "VAEDecode",
+      "title": "🎨 VAE Decode — SEG 5",
+      "pos": [
+        1100,
+        3380
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 621
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 622
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            673,
+            688
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 440,
+      "type": "WanImageToVideo",
+      "title": "⭐ WAN 2.2 I2V — SEG 6",
+      "pos": [
+        1460,
+        2500
+      ],
+      "size": [
+        340,
+        210
+      ],
+      "color": "#6b1a1a",
+      "bgcolor": "#3a0f0f",
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 623
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 624
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 625
+        },
+        {
+          "name": "clip_vision_output",
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 626
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 674
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            629,
+            632
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "slot_index": 1,
+          "links": [
+            630,
+            633
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "slot_index": 2,
+          "links": [
+            631
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "WanImageToVideo"
+      },
+      "widgets_values": [
+        480,
+        832,
+        121,
+        1
+      ]
+    },
+    {
+      "id": 441,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P1 — SEG 6",
+      "pos": [
+        1460,
+        2740
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 627
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 629
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 630
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 631
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            634
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "enable",
+        48,
+        "fixed",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        0,
+        10,
+        "enable"
+      ]
+    },
+    {
+      "id": 442,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P2 — SEG 6",
+      "pos": [
+        1460,
+        3060
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 628
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 632
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 633
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 634
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            635
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "disable",
+        0,
+        "fixed",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        10,
+        20,
+        "disable"
+      ]
+    },
+    {
+      "id": 443,
+      "type": "VAEDecode",
+      "title": "🎨 VAE Decode — SEG 6",
+      "pos": [
+        1460,
+        3380
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 635
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 636
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            675,
+            691
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 450,
+      "type": "WanImageToVideo",
+      "title": "⭐ WAN 2.2 I2V — SEG 7",
+      "pos": [
+        1820,
+        2500
+      ],
+      "size": [
+        340,
+        210
+      ],
+      "color": "#6b1a1a",
+      "bgcolor": "#3a0f0f",
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 637
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 638
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 639
+        },
+        {
+          "name": "clip_vision_output",
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 640
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 676
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            643,
+            646
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "slot_index": 1,
+          "links": [
+            644,
+            647
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "slot_index": 2,
+          "links": [
+            645
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "WanImageToVideo"
+      },
+      "widgets_values": [
+        480,
+        832,
+        121,
+        1
+      ]
+    },
+    {
+      "id": 451,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P1 — SEG 7",
+      "pos": [
+        1820,
+        2740
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 641
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 643
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 644
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 645
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            648
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "enable",
+        49,
+        "fixed",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        0,
+        10,
+        "enable"
+      ]
+    },
+    {
+      "id": 452,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P2 — SEG 7",
+      "pos": [
+        1820,
+        3060
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 642
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 646
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 647
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 648
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            649
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "disable",
+        0,
+        "fixed",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        10,
+        20,
+        "disable"
+      ]
+    },
+    {
+      "id": 453,
+      "type": "VAEDecode",
+      "title": "🎨 VAE Decode — SEG 7",
+      "pos": [
+        1820,
+        3380
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 649
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 650
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            677,
+            694
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 460,
+      "type": "WanImageToVideo",
+      "title": "⭐ WAN 2.2 I2V — SEG 8",
+      "pos": [
+        2180,
+        2500
+      ],
+      "size": [
+        340,
+        210
+      ],
+      "color": "#6b1a1a",
+      "bgcolor": "#3a0f0f",
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 651
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 652
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 653
+        },
+        {
+          "name": "clip_vision_output",
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 654
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 678
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            657,
+            660
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "slot_index": 1,
+          "links": [
+            658,
+            661
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "slot_index": 2,
+          "links": [
+            659
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "WanImageToVideo"
+      },
+      "widgets_values": [
+        480,
+        832,
+        121,
+        1
+      ]
+    },
+    {
+      "id": 461,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P1 — SEG 8",
+      "pos": [
+        2180,
+        2740
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 655
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 657
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 658
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 659
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            662
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "enable",
+        50,
+        "fixed",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        0,
+        10,
+        "enable"
+      ]
+    },
+    {
+      "id": 462,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P2 — SEG 8",
+      "pos": [
+        2180,
+        3060
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 656
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 660
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 661
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 662
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            663
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "disable",
+        0,
+        "fixed",
+        20,
+        3.5,
+        "euler",
+        "simple",
+        10,
+        20,
+        "disable"
+      ]
+    },
+    {
+      "id": 463,
+      "type": "VAEDecode",
+      "title": "🎨 VAE Decode — SEG 8",
+      "pos": [
+        2180,
+        3380
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 663
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 664
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            697
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 501,
+      "type": "ImageFromBatch",
+      "title": "⏭️ Último frame SEG 1 → início SEG 2",
+      "pos": [
+        20,
+        3500
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 665
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            666
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        120,
+        1
+      ]
+    },
+    {
+      "id": 502,
+      "type": "ImageFromBatch",
+      "title": "⏭️ Último frame SEG 2 → início SEG 3",
+      "pos": [
+        380,
+        3500
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 667
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            668
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        120,
+        1
+      ]
+    },
+    {
+      "id": 503,
+      "type": "ImageFromBatch",
+      "title": "⏭️ Último frame SEG 3 → início SEG 4",
+      "pos": [
+        740,
+        3500
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 669
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            670
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        120,
+        1
+      ]
+    },
+    {
+      "id": 504,
+      "type": "ImageFromBatch",
+      "title": "⏭️ Último frame SEG 4 → início SEG 5",
+      "pos": [
+        1100,
+        3500
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 671
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            672
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        120,
+        1
+      ]
+    },
+    {
+      "id": 505,
+      "type": "ImageFromBatch",
+      "title": "⏭️ Último frame SEG 5 → início SEG 6",
+      "pos": [
+        1460,
+        3500
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 673
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            674
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        120,
+        1
+      ]
+    },
+    {
+      "id": 506,
+      "type": "ImageFromBatch",
+      "title": "⏭️ Último frame SEG 6 → início SEG 7",
+      "pos": [
+        1820,
+        3500
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 675
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            676
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        120,
+        1
+      ]
+    },
+    {
+      "id": 507,
+      "type": "ImageFromBatch",
+      "title": "⏭️ Último frame SEG 7 → início SEG 8",
+      "pos": [
+        2180,
+        3500
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 677
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            678
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        120,
+        1
+      ]
+    },
+    {
+      "id": 508,
+      "type": "ImageFromBatch",
+      "title": "✂️ SEG 2 sem 1º frame",
+      "pos": [
+        20,
+        3640
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 679
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            681
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        1,
+        120
+      ]
+    },
+    {
+      "id": 509,
+      "type": "ImageBatch",
+      "title": "🔗 Junta até SEG 2",
+      "pos": [
+        20,
+        3780
+      ],
+      "size": [
+        300,
+        60
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 680
+        },
+        {
+          "name": "image2",
+          "type": "IMAGE",
+          "link": 681
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            683
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageBatch"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 510,
+      "type": "ImageFromBatch",
+      "title": "✂️ SEG 3 sem 1º frame",
+      "pos": [
+        380,
+        3640
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 682
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            684
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        1,
+        120
+      ]
+    },
+    {
+      "id": 511,
+      "type": "ImageBatch",
+      "title": "🔗 Junta até SEG 3",
+      "pos": [
+        380,
+        3780
+      ],
+      "size": [
+        300,
+        60
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 683
+        },
+        {
+          "name": "image2",
+          "type": "IMAGE",
+          "link": 684
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            686
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageBatch"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 512,
+      "type": "ImageFromBatch",
+      "title": "✂️ SEG 4 sem 1º frame",
+      "pos": [
+        740,
+        3640
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 685
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            687
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        1,
+        120
+      ]
+    },
+    {
+      "id": 513,
+      "type": "ImageBatch",
+      "title": "🔗 Junta até SEG 4",
+      "pos": [
+        740,
+        3780
+      ],
+      "size": [
+        300,
+        60
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 686
+        },
+        {
+          "name": "image2",
+          "type": "IMAGE",
+          "link": 687
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            689
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageBatch"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 514,
+      "type": "ImageFromBatch",
+      "title": "✂️ SEG 5 sem 1º frame",
+      "pos": [
+        1100,
+        3640
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 688
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            690
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        1,
+        120
+      ]
+    },
+    {
+      "id": 515,
+      "type": "ImageBatch",
+      "title": "🔗 Junta até SEG 5",
+      "pos": [
+        1100,
+        3780
+      ],
+      "size": [
+        300,
+        60
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 689
+        },
+        {
+          "name": "image2",
+          "type": "IMAGE",
+          "link": 690
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            692
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageBatch"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 516,
+      "type": "ImageFromBatch",
+      "title": "✂️ SEG 6 sem 1º frame",
+      "pos": [
+        1460,
+        3640
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 691
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            693
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        1,
+        120
+      ]
+    },
+    {
+      "id": 517,
+      "type": "ImageBatch",
+      "title": "🔗 Junta até SEG 6",
+      "pos": [
+        1460,
+        3780
+      ],
+      "size": [
+        300,
+        60
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 692
+        },
+        {
+          "name": "image2",
+          "type": "IMAGE",
+          "link": 693
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            695
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageBatch"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 518,
+      "type": "ImageFromBatch",
+      "title": "✂️ SEG 7 sem 1º frame",
+      "pos": [
+        1820,
+        3640
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 694
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            696
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        1,
+        120
+      ]
+    },
+    {
+      "id": 519,
+      "type": "ImageBatch",
+      "title": "🔗 Junta até SEG 7",
+      "pos": [
+        1820,
+        3780
+      ],
+      "size": [
+        300,
+        60
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 695
+        },
+        {
+          "name": "image2",
+          "type": "IMAGE",
+          "link": 696
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            698
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageBatch"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 520,
+      "type": "ImageFromBatch",
+      "title": "✂️ SEG 8 sem 1º frame",
+      "pos": [
+        2180,
+        3640
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 697
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            699
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        1,
+        120
+      ]
+    },
+    {
+      "id": 521,
+      "type": "ImageBatch",
+      "title": "🔗 Junta até SEG 8",
+      "pos": [
+        2180,
+        3780
+      ],
+      "size": [
+        300,
+        60
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 698
+        },
+        {
+          "name": "image2",
+          "type": "IMAGE",
+          "link": 699
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            700
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageBatch"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 522,
+      "type": "ImageFromBatch",
+      "title": "✂️ Corta no tamanho do áudio",
+      "pos": [
+        2540,
+        3780
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 700
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 701
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            702
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        0,
+        901
+      ]
     }
   ],
   "links": [
@@ -1412,22 +4112,6 @@
       "VIDEO"
     ],
     [
-      551,
-      351,
-      0,
-      322,
-      5,
-      "INT"
-    ],
-    [
-      553,
-      330,
-      0,
-      332,
-      0,
-      "IMAGE"
-    ],
-    [
       554,
       332,
       0,
@@ -1530,6 +4214,1094 @@
       331,
       1,
       "AUDIO"
+    ],
+    [
+      567,
+      302,
+      0,
+      400,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      568,
+      303,
+      0,
+      400,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      569,
+      313,
+      0,
+      400,
+      2,
+      "VAE"
+    ],
+    [
+      570,
+      352,
+      0,
+      400,
+      3,
+      "CLIP_VISION_OUTPUT"
+    ],
+    [
+      571,
+      320,
+      0,
+      401,
+      0,
+      "MODEL"
+    ],
+    [
+      572,
+      321,
+      0,
+      402,
+      0,
+      "MODEL"
+    ],
+    [
+      573,
+      400,
+      0,
+      401,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      574,
+      400,
+      1,
+      401,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      575,
+      400,
+      2,
+      401,
+      3,
+      "LATENT"
+    ],
+    [
+      576,
+      400,
+      0,
+      402,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      577,
+      400,
+      1,
+      402,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      578,
+      401,
+      0,
+      402,
+      3,
+      "LATENT"
+    ],
+    [
+      579,
+      402,
+      0,
+      403,
+      0,
+      "LATENT"
+    ],
+    [
+      580,
+      313,
+      0,
+      403,
+      1,
+      "VAE"
+    ],
+    [
+      581,
+      302,
+      0,
+      410,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      582,
+      303,
+      0,
+      410,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      583,
+      313,
+      0,
+      410,
+      2,
+      "VAE"
+    ],
+    [
+      584,
+      352,
+      0,
+      410,
+      3,
+      "CLIP_VISION_OUTPUT"
+    ],
+    [
+      585,
+      320,
+      0,
+      411,
+      0,
+      "MODEL"
+    ],
+    [
+      586,
+      321,
+      0,
+      412,
+      0,
+      "MODEL"
+    ],
+    [
+      587,
+      410,
+      0,
+      411,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      588,
+      410,
+      1,
+      411,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      589,
+      410,
+      2,
+      411,
+      3,
+      "LATENT"
+    ],
+    [
+      590,
+      410,
+      0,
+      412,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      591,
+      410,
+      1,
+      412,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      592,
+      411,
+      0,
+      412,
+      3,
+      "LATENT"
+    ],
+    [
+      593,
+      412,
+      0,
+      413,
+      0,
+      "LATENT"
+    ],
+    [
+      594,
+      313,
+      0,
+      413,
+      1,
+      "VAE"
+    ],
+    [
+      595,
+      302,
+      0,
+      420,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      596,
+      303,
+      0,
+      420,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      597,
+      313,
+      0,
+      420,
+      2,
+      "VAE"
+    ],
+    [
+      598,
+      352,
+      0,
+      420,
+      3,
+      "CLIP_VISION_OUTPUT"
+    ],
+    [
+      599,
+      320,
+      0,
+      421,
+      0,
+      "MODEL"
+    ],
+    [
+      600,
+      321,
+      0,
+      422,
+      0,
+      "MODEL"
+    ],
+    [
+      601,
+      420,
+      0,
+      421,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      602,
+      420,
+      1,
+      421,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      603,
+      420,
+      2,
+      421,
+      3,
+      "LATENT"
+    ],
+    [
+      604,
+      420,
+      0,
+      422,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      605,
+      420,
+      1,
+      422,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      606,
+      421,
+      0,
+      422,
+      3,
+      "LATENT"
+    ],
+    [
+      607,
+      422,
+      0,
+      423,
+      0,
+      "LATENT"
+    ],
+    [
+      608,
+      313,
+      0,
+      423,
+      1,
+      "VAE"
+    ],
+    [
+      609,
+      302,
+      0,
+      430,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      610,
+      303,
+      0,
+      430,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      611,
+      313,
+      0,
+      430,
+      2,
+      "VAE"
+    ],
+    [
+      612,
+      352,
+      0,
+      430,
+      3,
+      "CLIP_VISION_OUTPUT"
+    ],
+    [
+      613,
+      320,
+      0,
+      431,
+      0,
+      "MODEL"
+    ],
+    [
+      614,
+      321,
+      0,
+      432,
+      0,
+      "MODEL"
+    ],
+    [
+      615,
+      430,
+      0,
+      431,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      616,
+      430,
+      1,
+      431,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      617,
+      430,
+      2,
+      431,
+      3,
+      "LATENT"
+    ],
+    [
+      618,
+      430,
+      0,
+      432,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      619,
+      430,
+      1,
+      432,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      620,
+      431,
+      0,
+      432,
+      3,
+      "LATENT"
+    ],
+    [
+      621,
+      432,
+      0,
+      433,
+      0,
+      "LATENT"
+    ],
+    [
+      622,
+      313,
+      0,
+      433,
+      1,
+      "VAE"
+    ],
+    [
+      623,
+      302,
+      0,
+      440,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      624,
+      303,
+      0,
+      440,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      625,
+      313,
+      0,
+      440,
+      2,
+      "VAE"
+    ],
+    [
+      626,
+      352,
+      0,
+      440,
+      3,
+      "CLIP_VISION_OUTPUT"
+    ],
+    [
+      627,
+      320,
+      0,
+      441,
+      0,
+      "MODEL"
+    ],
+    [
+      628,
+      321,
+      0,
+      442,
+      0,
+      "MODEL"
+    ],
+    [
+      629,
+      440,
+      0,
+      441,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      630,
+      440,
+      1,
+      441,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      631,
+      440,
+      2,
+      441,
+      3,
+      "LATENT"
+    ],
+    [
+      632,
+      440,
+      0,
+      442,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      633,
+      440,
+      1,
+      442,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      634,
+      441,
+      0,
+      442,
+      3,
+      "LATENT"
+    ],
+    [
+      635,
+      442,
+      0,
+      443,
+      0,
+      "LATENT"
+    ],
+    [
+      636,
+      313,
+      0,
+      443,
+      1,
+      "VAE"
+    ],
+    [
+      637,
+      302,
+      0,
+      450,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      638,
+      303,
+      0,
+      450,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      639,
+      313,
+      0,
+      450,
+      2,
+      "VAE"
+    ],
+    [
+      640,
+      352,
+      0,
+      450,
+      3,
+      "CLIP_VISION_OUTPUT"
+    ],
+    [
+      641,
+      320,
+      0,
+      451,
+      0,
+      "MODEL"
+    ],
+    [
+      642,
+      321,
+      0,
+      452,
+      0,
+      "MODEL"
+    ],
+    [
+      643,
+      450,
+      0,
+      451,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      644,
+      450,
+      1,
+      451,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      645,
+      450,
+      2,
+      451,
+      3,
+      "LATENT"
+    ],
+    [
+      646,
+      450,
+      0,
+      452,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      647,
+      450,
+      1,
+      452,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      648,
+      451,
+      0,
+      452,
+      3,
+      "LATENT"
+    ],
+    [
+      649,
+      452,
+      0,
+      453,
+      0,
+      "LATENT"
+    ],
+    [
+      650,
+      313,
+      0,
+      453,
+      1,
+      "VAE"
+    ],
+    [
+      651,
+      302,
+      0,
+      460,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      652,
+      303,
+      0,
+      460,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      653,
+      313,
+      0,
+      460,
+      2,
+      "VAE"
+    ],
+    [
+      654,
+      352,
+      0,
+      460,
+      3,
+      "CLIP_VISION_OUTPUT"
+    ],
+    [
+      655,
+      320,
+      0,
+      461,
+      0,
+      "MODEL"
+    ],
+    [
+      656,
+      321,
+      0,
+      462,
+      0,
+      "MODEL"
+    ],
+    [
+      657,
+      460,
+      0,
+      461,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      658,
+      460,
+      1,
+      461,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      659,
+      460,
+      2,
+      461,
+      3,
+      "LATENT"
+    ],
+    [
+      660,
+      460,
+      0,
+      462,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      661,
+      460,
+      1,
+      462,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      662,
+      461,
+      0,
+      462,
+      3,
+      "LATENT"
+    ],
+    [
+      663,
+      462,
+      0,
+      463,
+      0,
+      "LATENT"
+    ],
+    [
+      664,
+      313,
+      0,
+      463,
+      1,
+      "VAE"
+    ],
+    [
+      665,
+      330,
+      0,
+      501,
+      0,
+      "IMAGE"
+    ],
+    [
+      666,
+      501,
+      0,
+      400,
+      4,
+      "IMAGE"
+    ],
+    [
+      667,
+      403,
+      0,
+      502,
+      0,
+      "IMAGE"
+    ],
+    [
+      668,
+      502,
+      0,
+      410,
+      4,
+      "IMAGE"
+    ],
+    [
+      669,
+      413,
+      0,
+      503,
+      0,
+      "IMAGE"
+    ],
+    [
+      670,
+      503,
+      0,
+      420,
+      4,
+      "IMAGE"
+    ],
+    [
+      671,
+      423,
+      0,
+      504,
+      0,
+      "IMAGE"
+    ],
+    [
+      672,
+      504,
+      0,
+      430,
+      4,
+      "IMAGE"
+    ],
+    [
+      673,
+      433,
+      0,
+      505,
+      0,
+      "IMAGE"
+    ],
+    [
+      674,
+      505,
+      0,
+      440,
+      4,
+      "IMAGE"
+    ],
+    [
+      675,
+      443,
+      0,
+      506,
+      0,
+      "IMAGE"
+    ],
+    [
+      676,
+      506,
+      0,
+      450,
+      4,
+      "IMAGE"
+    ],
+    [
+      677,
+      453,
+      0,
+      507,
+      0,
+      "IMAGE"
+    ],
+    [
+      678,
+      507,
+      0,
+      460,
+      4,
+      "IMAGE"
+    ],
+    [
+      679,
+      403,
+      0,
+      508,
+      0,
+      "IMAGE"
+    ],
+    [
+      680,
+      330,
+      0,
+      509,
+      0,
+      "IMAGE"
+    ],
+    [
+      681,
+      508,
+      0,
+      509,
+      1,
+      "IMAGE"
+    ],
+    [
+      682,
+      413,
+      0,
+      510,
+      0,
+      "IMAGE"
+    ],
+    [
+      683,
+      509,
+      0,
+      511,
+      0,
+      "IMAGE"
+    ],
+    [
+      684,
+      510,
+      0,
+      511,
+      1,
+      "IMAGE"
+    ],
+    [
+      685,
+      423,
+      0,
+      512,
+      0,
+      "IMAGE"
+    ],
+    [
+      686,
+      511,
+      0,
+      513,
+      0,
+      "IMAGE"
+    ],
+    [
+      687,
+      512,
+      0,
+      513,
+      1,
+      "IMAGE"
+    ],
+    [
+      688,
+      433,
+      0,
+      514,
+      0,
+      "IMAGE"
+    ],
+    [
+      689,
+      513,
+      0,
+      515,
+      0,
+      "IMAGE"
+    ],
+    [
+      690,
+      514,
+      0,
+      515,
+      1,
+      "IMAGE"
+    ],
+    [
+      691,
+      443,
+      0,
+      516,
+      0,
+      "IMAGE"
+    ],
+    [
+      692,
+      515,
+      0,
+      517,
+      0,
+      "IMAGE"
+    ],
+    [
+      693,
+      516,
+      0,
+      517,
+      1,
+      "IMAGE"
+    ],
+    [
+      694,
+      453,
+      0,
+      518,
+      0,
+      "IMAGE"
+    ],
+    [
+      695,
+      517,
+      0,
+      519,
+      0,
+      "IMAGE"
+    ],
+    [
+      696,
+      518,
+      0,
+      519,
+      1,
+      "IMAGE"
+    ],
+    [
+      697,
+      463,
+      0,
+      520,
+      0,
+      "IMAGE"
+    ],
+    [
+      698,
+      519,
+      0,
+      521,
+      0,
+      "IMAGE"
+    ],
+    [
+      699,
+      520,
+      0,
+      521,
+      1,
+      "IMAGE"
+    ],
+    [
+      700,
+      521,
+      0,
+      522,
+      0,
+      "IMAGE"
+    ],
+    [
+      701,
+      351,
+      0,
+      522,
+      1,
+      "INT"
+    ],
+    [
+      702,
+      522,
+      0,
+      332,
+      0,
+      "IMAGE"
     ]
   ]
 }
