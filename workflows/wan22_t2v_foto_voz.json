@@ -2,7 +2,7 @@
   "id": "wan22-t2v-foto-voz-lipsync",
   "revision": 1,
   "last_node_id": 513,
-  "last_link_id": 633,
+  "last_link_id": 637,
   "version": 0.4,
   "config": {},
   "extra": {
@@ -153,7 +153,7 @@
     {
       "id": 302,
       "type": "CLIPTextEncode",
-      "title": "✏️ PROMPT — ESCREVA AQUI O QUE QUER QUE ELA FAÇA",
+      "title": "✏️ PROMPT SEG 1 — câmera se aproxima (escreva a ação aqui)",
       "pos": [
         20,
         520
@@ -180,10 +180,7 @@
           "type": "CONDITIONING",
           "slot_index": 0,
           "links": [
-            503,
-            571,
-            585,
-            599
+            503
           ]
         }
       ],
@@ -191,7 +188,7 @@
         "Node name for S&R": "CLIPTextEncode"
       },
       "widgets_values": [
-        "photorealistic UGC video of a young woman talking directly to the camera, holding a skincare product near her face, natural skin texture with visible pores and subtle imperfections, natural soft window light, shot on a smartphone, handheld, shallow depth of field, natural blinking and micro-expressions, relaxed natural head movement, expressive speaking, realistic fabric and hair detail, 4k"
+        "photorealistic UGC video of a young woman in a bright modern room, the camera slowly dollies in toward her, smoothly pushing in from a full body shot to a close-up on her face and shoulders, she looks at the camera smiling and talking naturally, holding a skincare product near her face, natural skin texture with visible pores, soft natural window light, shot on a smartphone, natural blinking and micro-expressions, 4k"
       ]
     },
     {
@@ -434,7 +431,8 @@
           "slot_index": 0,
           "links": [
             502,
-            504
+            504,
+            634
           ]
         }
       ],
@@ -981,7 +979,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "WORKFLOW T2V — FOTO + PROMPT + VOZ (realista, 30 s)\n\n1. Node 300: foto da modelo (vertical)\n2. Node 302: prompt do que ela faz\n3. Node 304: voz de referência\n4. Nodes 305/306/307: texto falado (até ~190 caracteres cada) — são unidos em um áudio\n5. Executar\n\nPIPELINE: Wan 2.2 14B + LoRA 4 passos (cfg 1) em 4 segmentos de 121 frames a 16 fps (velocidade nativa), encadeados pelo último frame → interpolação FILM 16→32 fps → reamostra 25 fps → corta no tamanho do áudio (máx 30 s) → LatentSync → vídeo com voz.\nModelos: wan2.2 i2v high/low + lightx2v 4steps LoRA high/low + umt5 + vae + clip_vision + film_net_fp16 + Qwen3-TTS + LatentSync"
+        "WORKFLOW T2V — FOTO + PROMPT + VOZ (realista, 30 s)\n\n1. Node 300: foto da modelo (vertical)\n2. Node 302: prompt do que ela faz\n3. Node 304: voz de referência\n4. Nodes 305/306/307: texto falado (até ~190 caracteres cada) — são unidos em um áudio\n5. Executar\n\nPIPELINE: Wan 2.2 14B + LoRA 4 passos (cfg 1) em 4 segmentos de 121 frames a 16 fps (velocidade nativa), encadeados pelo último frame → interpolação FILM 16→32 fps → reamostra 25 fps → corta no tamanho do áudio (máx 30 s) → LatentSync → vídeo com voz.\nModelos: wan2.2 i2v high/low + lightx2v 4steps LoRA high/low + umt5 + vae + clip_vision + film_net_fp16 + Qwen3-TTS + LatentSync\n\nPROMPTS: node 302 = segmento 1 (câmera se aproxima até close-up); node 308 = segmentos 2–4 (câmera parada em close). O rosto maior melhora o LipSync."
       ]
     },
     {
@@ -1364,7 +1362,7 @@
         {
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 571
+          "link": 635
         },
         {
           "name": "negative",
@@ -1615,7 +1613,7 @@
         {
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 585
+          "link": 636
         },
         {
           "name": "negative",
@@ -1866,7 +1864,7 @@
         {
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 599
+          "link": 637
         },
         {
           "name": "negative",
@@ -2625,6 +2623,49 @@
         0,
         749
       ]
+    },
+    {
+      "id": 308,
+      "type": "CLIPTextEncode",
+      "title": "✏️ PROMPT SEG 2–4 — câmera parada em close-up",
+      "pos": [
+        1800,
+        40
+      ],
+      "size": [
+        660,
+        200
+      ],
+      "color": "#1a5a1a",
+      "bgcolor": "#0a3a0a",
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 634
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            635,
+            636,
+            637
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "photorealistic UGC video of a young woman in a close-up shot from the chest up, the camera stays steady and completely still, she keeps talking directly to the camera with natural expressive lip movement, natural head movement and blinking, holding a skincare product near her face, natural skin texture with visible pores, soft natural window light, shot on a smartphone, 4k"
+      ]
     }
   ],
   "links": [
@@ -2909,14 +2950,6 @@
       "MODEL"
     ],
     [
-      571,
-      302,
-      0,
-      400,
-      0,
-      "CONDITIONING"
-    ],
-    [
       572,
       303,
       0,
@@ -3021,14 +3054,6 @@
       "VAE"
     ],
     [
-      585,
-      302,
-      0,
-      410,
-      0,
-      "CONDITIONING"
-    ],
-    [
       586,
       303,
       0,
@@ -3131,14 +3156,6 @@
       413,
       1,
       "VAE"
-    ],
-    [
-      599,
-      302,
-      0,
-      420,
-      0,
-      "CONDITIONING"
     ],
     [
       600,
@@ -3411,6 +3428,38 @@
       332,
       0,
       "IMAGE"
+    ],
+    [
+      634,
+      312,
+      0,
+      308,
+      0,
+      "CLIP"
+    ],
+    [
+      635,
+      308,
+      0,
+      400,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      636,
+      308,
+      0,
+      410,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      637,
+      308,
+      0,
+      420,
+      0,
+      "CONDITIONING"
     ]
   ]
 }
