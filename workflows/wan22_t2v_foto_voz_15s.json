@@ -2,7 +2,7 @@
   "id": "wan22-t2v-foto-voz-lipsync",
   "revision": 1,
   "last_node_id": 507,
-  "last_link_id": 597,
+  "last_link_id": 601,
   "version": 0.4,
   "config": {},
   "extra": {
@@ -230,7 +230,7 @@
         "Node name for S&R": "CLIPTextEncode"
       },
       "widgets_values": [
-        "blurry, low quality, distorted face, extra fingers, plastic skin, airbrushed, oversmoothed, uncanny, static, frozen, watermark, text, cartoon, anime, cgi, 3d render, deformed, oversaturated"
+        "blurry, low quality, distorted face, extra fingers, plastic skin, airbrushed, oversmoothed, uncanny, static, frozen, watermark, text, cartoon, anime, cgi, 3d render, deformed, oversaturated, mouth closed, lips pressed, eyes closed, talking head frozen"
       ]
     },
     {
@@ -292,6 +292,14 @@
           "name": "reference_audio",
           "type": "AUDIO",
           "link": 506
+        },
+        {
+          "name": "reference_text",
+          "type": "STRING",
+          "widget": {
+            "name": "reference_text"
+          },
+          "link": 599
         }
       ],
       "outputs": [
@@ -312,9 +320,9 @@
         "1.7B",
         "Portuguese",
         "",
-        true,
         false,
-        -1,
+        false,
+        42,
         "fixed"
       ]
     },
@@ -969,7 +977,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "WORKFLOW T2V — FOTO + PROMPT + VOZ (realista, 30 s)\n\n1. Node 300: foto da modelo (vertical)\n2. Node 302: prompt do que ela faz\n3. Node 304: voz de referência\n4. Nodes 305/306/307: texto falado (até ~190 caracteres cada) — são unidos em um áudio\n5. Executar\n\nPIPELINE: Wan 2.2 14B + LoRA 4 passos (cfg 1) em 4 segmentos de 121 frames a 16 fps (velocidade nativa), encadeados pelo último frame → interpolação FILM 16→32 fps → reamostra 25 fps → corta no tamanho do áudio (máx 15 s) → LatentSync → vídeo com voz.\nModelos: wan2.2 i2v high/low + lightx2v 4steps LoRA high/low + umt5 + vae + clip_vision + film_net_fp16 + Qwen3-TTS + LatentSync"
+        "WORKFLOW T2V — FOTO + PROMPT + VOZ (realista, 30 s)\n\n1. Node 300: foto da modelo (vertical)\n2. Node 302: prompt do que ela faz\n3. Node 304: voz de referência\n4. Nodes 305/306/307: texto falado (até ~190 caracteres cada) — são unidos em um áudio\n5. Executar\n\nPIPELINE: Wan 2.2 14B + LoRA 4 passos (cfg 1) em 4 segmentos de 121 frames a 16 fps (velocidade nativa), encadeados pelo último frame → interpolação FILM 16→32 fps → reamostra 25 fps → corta no tamanho do áudio (máx 15 s) → LatentSync → vídeo com voz.\nModelos: wan2.2 i2v high/low + lightx2v 4steps LoRA high/low + umt5 + vae + clip_vision + film_net_fp16 + Qwen3-TTS + LatentSync\n\nAJUSTES 2026-10-27: fala acelerada 1.08x (node 362, antes de 351/331/332); voz unificada nos blocos (seed 42 fixa; cole a transcrição EXATA da referência no node 363 para clonar com ICL — vazio = modo x-vector). Rodar ldconfig/start.sh em todo boot."
       ]
     },
     {
@@ -1085,6 +1093,14 @@
           "name": "reference_audio",
           "type": "AUDIO",
           "link": 558
+        },
+        {
+          "name": "reference_text",
+          "type": "STRING",
+          "widget": {
+            "name": "reference_text"
+          },
+          "link": 600
         }
       ],
       "outputs": [
@@ -1105,9 +1121,9 @@
         "1.7B",
         "Portuguese",
         "",
-        true,
         false,
-        -1,
+        false,
+        42,
         "fixed"
       ]
     },
@@ -1133,6 +1149,14 @@
           "name": "reference_audio",
           "type": "AUDIO",
           "link": 559
+        },
+        {
+          "name": "reference_text",
+          "type": "STRING",
+          "widget": {
+            "name": "reference_text"
+          },
+          "link": 601
         }
       ],
       "outputs": [
@@ -1153,9 +1177,9 @@
         "1.7B",
         "Portuguese",
         "",
+        false,
         true,
-        true,
-        -1,
+        42,
         "fixed"
       ]
     },
@@ -1236,9 +1260,7 @@
           "type": "AUDIO",
           "slot_index": 0,
           "links": [
-            564,
-            565,
-            566
+            598
           ]
         }
       ],
@@ -1906,6 +1928,86 @@
       "widgets_values": [
         "photorealistic UGC video of a young woman in a close-up shot from the chest up, the camera stays steady and completely still, she keeps talking directly to the camera with natural expressive lip movement, natural head movement and blinking, holding a skincare product near her face, natural skin texture with visible pores, soft natural window light, shot on a smartphone, 4k"
       ]
+    },
+    {
+      "id": 362,
+      "type": "AudioSpeed",
+      "title": "⏩ Acelera fala (pitch preservado) — 1.08x",
+      "pos": [
+        1360,
+        1480
+      ],
+      "size": [
+        300,
+        80
+      ],
+      "color": "#4a1a4a",
+      "bgcolor": "#2a0a2a",
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 598
+        }
+      ],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "slot_index": 0,
+          "links": [
+            564,
+            565,
+            566
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AudioSpeed"
+      },
+      "widgets_values": [
+        1.08
+      ]
+    },
+    {
+      "id": 363,
+      "type": "PrimitiveStringMultiline",
+      "title": "📝 TRANSCRIÇÃO EXATA da voz de referência (nodes 304) — preencha p/ travar a voz",
+      "pos": [
+        20,
+        1010
+      ],
+      "size": [
+        660,
+        120
+      ],
+      "color": "#4a1a4a",
+      "bgcolor": "#2a0a2a",
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "slot_index": 0,
+          "links": [
+            599,
+            600,
+            601
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        ""
+      ]
     }
   ],
   "links": [
@@ -2135,7 +2237,7 @@
     ],
     [
       564,
-      361,
+      362,
       0,
       332,
       1,
@@ -2143,7 +2245,7 @@
     ],
     [
       565,
-      361,
+      362,
       0,
       351,
       0,
@@ -2151,7 +2253,7 @@
     ],
     [
       566,
-      361,
+      362,
       0,
       331,
       1,
@@ -2396,6 +2498,38 @@
       400,
       0,
       "CONDITIONING"
+    ],
+    [
+      598,
+      361,
+      0,
+      362,
+      0,
+      "AUDIO"
+    ],
+    [
+      599,
+      363,
+      0,
+      305,
+      1,
+      "STRING"
+    ],
+    [
+      600,
+      363,
+      0,
+      306,
+      1,
+      "STRING"
+    ],
+    [
+      601,
+      363,
+      0,
+      307,
+      1,
+      "STRING"
     ]
   ]
 }

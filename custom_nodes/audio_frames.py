@@ -44,6 +44,50 @@ class ResampleFrames:
         idx = [min(int(i * src_fps / dst_fps), n - 1) for i in range(n_out)]
         return (images[idx],)
 
+class AudioSpeed:
+    """Acelera/desacelera o AUDIO preservando o tom (ffmpeg atempo). A duracao final = original / speed."""
 
-NODE_CLASS_MAPPINGS = {"AudioToVideoFrames": AudioToVideoFrames, "ResampleFrames": ResampleFrames}
-NODE_DISPLAY_NAME_MAPPINGS = {"AudioToVideoFrames": "Audio → Video Frames (4n+1)", "ResampleFrames": "Resample Frames (fps → fps)"}
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {
+            "audio": ("AUDIO",),
+            "speed": ("FLOAT", {"default": 1.08, "min": 0.5, "max": 2.0, "step": 0.01}),
+        }}
+
+    RETURN_TYPES = ("AUDIO",)
+    RETURN_NAMES = ("AUDIO",)
+    FUNCTION = "run"
+    CATEGORY = "audio/utils"
+
+    @staticmethod
+    def _ffmpeg():
+        import shutil
+        p = shutil.which("ffmpeg")
+        if p:
+            return p
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+
+    def run(self, audio, speed):
+        import subprocess
+        import numpy as np
+        import torch
+        if abs(speed - 1.0) < 1e-3:
+            return (audio,)
+        wav, sr = audio["waveform"], int(audio["sample_rate"])
+        ff = self._ffmpeg()
+        outs = []
+        for i in range(wav.shape[0]):
+            x = wav[i].detach().cpu().float().numpy()          # [C, T]
+            c = x.shape[0]
+            cmd = [ff, "-v", "error", "-f", "f32le", "-ar", str(sr), "-ac", str(c), "-i", "pipe:0",
+                   "-filter:a", f"atempo={speed:.4f}", "-f", "f32le", "-ar", str(sr), "-ac", str(c), "pipe:1"]
+            r = subprocess.run(cmd, input=np.ascontiguousarray(x.T).tobytes(), capture_output=True, check=True)
+            y = np.frombuffer(r.stdout, dtype=np.float32).reshape(-1, c).T.copy()
+            outs.append(torch.from_numpy(y))
+        t = min(o.shape[-1] for o in outs)
+        return ({"waveform": torch.stack([o[..., :t] for o in outs]).to(wav.dtype), "sample_rate": sr},)
+
+
+NODE_CLASS_MAPPINGS = {"AudioToVideoFrames": AudioToVideoFrames, "ResampleFrames": ResampleFrames, "AudioSpeed": AudioSpeed}
+NODE_DISPLAY_NAME_MAPPINGS = {"AudioToVideoFrames": "Audio → Video Frames (4n+1)", "ResampleFrames": "Resample Frames (fps → fps)", "AudioSpeed": "Audio Speed (pitch preservado)"}
