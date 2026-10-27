@@ -1178,7 +1178,7 @@
         "Portuguese",
         "",
         false,
-        true,
+        false,
         42,
         "fixed"
       ]
