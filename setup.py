@@ -135,7 +135,9 @@ WORKFLOWS = [
     {"name": "2_dancinha_engajamento_seguidores.json", "url": f"{RAW}/2_dancinha_engajamento_seguidores.json", "desc": "Dancinha"},
     {"name": "tiktok_3_cenas_ids_reais.json", "url": f"{RAW}/tiktok_3_cenas_ids_reais.json", "desc": "3 cenas (gancho/corpo/CTA)"},
     {"name": "tiktok_3_cenas_chaining.json", "url": f"{RAW}/tiktok_3_cenas_chaining.json", "desc": "3 cenas com chaining (teste)"},
-    {"name": "wan22_t2v_foto_voz.json", "url": f"{RAW}/wan22_t2v_foto_voz.json", "desc": "T2V + foto + voz Fish Audio + LipSync"},
+    {"name": "wan22_t2v_foto_voz.json", "url": f"{RAW}/wan22_t2v_foto_voz.json", "desc": "T2V + foto + voz Qwen3 TTS + LipSync (30 s)"},
+    {"name": "wan22_t2v_foto_voz_22s.json", "url": f"{RAW}/wan22_t2v_foto_voz_22s.json", "desc": "T2V + voz + LipSync (ate 22 s, 3 segmentos)"},
+    {"name": "wan22_t2v_foto_voz_15s.json", "url": f"{RAW}/wan22_t2v_foto_voz_15s.json", "desc": "T2V + voz + LipSync (ate 15 s, 2 segmentos)"},
 ]
 
 # ── FUNÇÃO DE DOWNLOAD ────────────────────────────────────────

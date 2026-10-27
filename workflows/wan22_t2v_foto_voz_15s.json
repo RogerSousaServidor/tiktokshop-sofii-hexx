@@ -1,0 +1,2401 @@
+{
+  "id": "wan22-t2v-foto-voz-lipsync",
+  "revision": 1,
+  "last_node_id": 507,
+  "last_link_id": 597,
+  "version": 0.4,
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6,
+      "offset": [
+        0,
+        0
+      ]
+    }
+  },
+  "groups": [
+    {
+      "title": "📥 INPUTS — Foto + Prompt + Voz",
+      "bounding": [
+        0,
+        0,
+        700,
+        1200
+      ],
+      "color": "#1a4a1a",
+      "font_size": 18,
+      "flags": {}
+    },
+    {
+      "title": "🧠 MODELOS — Não mexa aqui",
+      "bounding": [
+        720,
+        0,
+        700,
+        600
+      ],
+      "color": "#1a1a4a",
+      "font_size": 18,
+      "flags": {}
+    },
+    {
+      "title": "⚙️ PROCESSAMENTO — WAN 2.2 T2V",
+      "bounding": [
+        1440,
+        0,
+        800,
+        1200
+      ],
+      "color": "#4a2a1a",
+      "font_size": 18,
+      "flags": {}
+    },
+    {
+      "title": "👄 LIP SYNC + OUTPUT",
+      "bounding": [
+        2260,
+        0,
+        700,
+        1200
+      ],
+      "color": "#4a1a1a",
+      "font_size": 18,
+      "flags": {}
+    }
+  ],
+  "nodes": [
+    {
+      "id": 300,
+      "type": "LoadImage",
+      "title": "📸 FOTO DE REFERÊNCIA — Sua modelo",
+      "pos": [
+        20,
+        60
+      ],
+      "size": [
+        320,
+        320
+      ],
+      "color": "#1a5a1a",
+      "bgcolor": "#0a3a0a",
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            500,
+            555
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "SUA_FOTO_MODELO.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 301,
+      "type": "CLIPVisionLoader",
+      "title": "👁️ CLIP Vision — Entende a foto",
+      "pos": [
+        20,
+        420
+      ],
+      "size": [
+        320,
+        58
+      ],
+      "color": "#1a1a5a",
+      "bgcolor": "#0a0a3a",
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP_VISION",
+          "type": "CLIP_VISION",
+          "slot_index": 0,
+          "links": [
+            501
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPVisionLoader",
+        "models": [
+          {
+            "name": "clip_vision_h.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors",
+            "directory": "clip_vision"
+          }
+        ]
+      },
+      "widgets_values": [
+        "clip_vision_h.safetensors"
+      ]
+    },
+    {
+      "id": 302,
+      "type": "CLIPTextEncode",
+      "title": "✏️ PROMPT SEG 1 — câmera se aproxima (escreva a ação aqui)",
+      "pos": [
+        20,
+        520
+      ],
+      "size": [
+        660,
+        200
+      ],
+      "color": "#1a5a1a",
+      "bgcolor": "#0a3a0a",
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 502
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            503
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "photorealistic UGC video of a young woman in a bright modern room, the camera slowly dollies in toward her, smoothly pushing in from a full body shot to a close-up on her face and shoulders, she looks at the camera smiling and talking naturally, holding a skincare product near her face, natural skin texture with visible pores, soft natural window light, shot on a smartphone, natural blinking and micro-expressions, 4k"
+      ]
+    },
+    {
+      "id": 303,
+      "type": "CLIPTextEncode",
+      "title": "🚫 PROMPT NEGATIVO — O que NÃO quer",
+      "pos": [
+        20,
+        750
+      ],
+      "size": [
+        660,
+        130
+      ],
+      "color": "#5a1a1a",
+      "bgcolor": "#3a0a0a",
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 504
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            505,
+            572
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "blurry, low quality, distorted face, extra fingers, plastic skin, airbrushed, oversmoothed, uncanny, static, frozen, watermark, text, cartoon, anime, cgi, 3d render, deformed, oversaturated"
+      ]
+    },
+    {
+      "id": 304,
+      "type": "LoadAudio",
+      "title": "🎤 VOZ DA MODELO — Carregue o MP4 aqui",
+      "pos": [
+        20,
+        920
+      ],
+      "size": [
+        320,
+        80
+      ],
+      "color": "#4a1a4a",
+      "bgcolor": "#2a0a2a",
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "slot_index": 0,
+          "links": [
+            506,
+            558,
+            559
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadAudio"
+      },
+      "widgets_values": [
+        "VOZ_DA_MODELO.mp4"
+      ]
+    },
+    {
+      "id": 305,
+      "type": "AILab_Qwen3TTSVoiceClone",
+      "title": "🗣️ BLOCO 1 — texto (Qwen3 TTS)",
+      "pos": [
+        20,
+        1040
+      ],
+      "size": [
+        660,
+        420
+      ],
+      "color": "#4a1a4a",
+      "bgcolor": "#2a0a2a",
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "reference_audio",
+          "type": "AUDIO",
+          "link": 506
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "slot_index": 0,
+          "links": [
+            560
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AILab_Qwen3TTSVoiceClone"
+      },
+      "widgets_values": [
+        "Gente, esse produto transformou minha pele em 7 dias! Corre lá no link da bio!",
+        "1.7B",
+        "Portuguese",
+        "",
+        true,
+        false,
+        -1,
+        "fixed"
+      ]
+    },
+    {
+      "id": 310,
+      "type": "UNETLoader",
+      "title": "🧠 HIGH NOISE — I2V 14B",
+      "pos": [
+        740,
+        40
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "color": "#1a1a5a",
+      "bgcolor": "#0a0a3a",
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            567
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "directory": "diffusion_models"
+          }
+        ]
+      },
+      "widgets_values": [
+        "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 311,
+      "type": "UNETLoader",
+      "title": "🧠 LOW NOISE — I2V 14B",
+      "pos": [
+        740,
+        160
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "color": "#1a1a5a",
+      "bgcolor": "#0a0a3a",
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            569
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+            "directory": "diffusion_models"
+          }
+        ]
+      },
+      "widgets_values": [
+        "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 312,
+      "type": "CLIPLoader",
+      "title": "📝 Text Encoder — UMT5",
+      "pos": [
+        740,
+        280
+      ],
+      "size": [
+        340,
+        110
+      ],
+      "color": "#1a1a5a",
+      "bgcolor": "#0a0a3a",
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 0,
+          "links": [
+            502,
+            504,
+            596
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader",
+        "models": [
+          {
+            "name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+            "directory": "text_encoders"
+          }
+        ]
+      },
+      "widgets_values": [
+        "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "wan",
+        "default"
+      ]
+    },
+    {
+      "id": 313,
+      "type": "VAELoader",
+      "title": "🎨 VAE — Wan 2.1",
+      "pos": [
+        740,
+        420
+      ],
+      "size": [
+        340,
+        58
+      ],
+      "color": "#1a1a5a",
+      "bgcolor": "#0a0a3a",
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 0,
+          "links": [
+            510,
+            511,
+            573,
+            584
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader",
+        "models": [
+          {
+            "name": "wan_2.1_vae.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors",
+            "directory": "vae"
+          }
+        ]
+      },
+      "widgets_values": [
+        "wan_2.1_vae.safetensors"
+      ]
+    },
+    {
+      "id": 320,
+      "type": "ModelSamplingSD3",
+      "title": "⚙️ Sampling HIGH NOISE",
+      "pos": [
+        1460,
+        40
+      ],
+      "size": [
+        260,
+        58
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 568
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            512,
+            575
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingSD3"
+      },
+      "widgets_values": [
+        5.0
+      ]
+    },
+    {
+      "id": 321,
+      "type": "ModelSamplingSD3",
+      "title": "⚙️ Sampling LOW NOISE",
+      "pos": [
+        1460,
+        140
+      ],
+      "size": [
+        260,
+        58
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 570
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            513,
+            576
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingSD3"
+      },
+      "widgets_values": [
+        5.0
+      ]
+    },
+    {
+      "id": 322,
+      "type": "WanImageToVideo",
+      "title": "⭐ WAN 2.2 I2V — SEG 1 (121 frames)",
+      "pos": [
+        1460,
+        240
+      ],
+      "size": [
+        340,
+        210
+      ],
+      "color": "#6b1a1a",
+      "bgcolor": "#3a0f0f",
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 503
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 505
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 510
+        },
+        {
+          "name": "clip_vision_output",
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 556
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 500
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            514,
+            515
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "slot_index": 1,
+          "links": [
+            516,
+            517
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "slot_index": 2,
+          "links": [
+            518
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "WanImageToVideo"
+      },
+      "widgets_values": [
+        576,
+        1024,
+        121,
+        1
+      ]
+    },
+    {
+      "id": 323,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P1 — SEG 1 (4 passos)",
+      "pos": [
+        1460,
+        480
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 512
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 514
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 516
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 518
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            520
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "enable",
+        42,
+        "fixed",
+        4,
+        1,
+        "euler",
+        "simple",
+        0,
+        2,
+        "enable"
+      ]
+    },
+    {
+      "id": 324,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P2 — SEG 1 (4 passos)",
+      "pos": [
+        1460,
+        820
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 513
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 515
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 517
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 520
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            521
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "disable",
+        0,
+        "fixed",
+        4,
+        1,
+        "euler",
+        "simple",
+        2,
+        4,
+        "disable"
+      ]
+    },
+    {
+      "id": 330,
+      "type": "VAEDecode",
+      "title": "🎨 VAE Decode",
+      "pos": [
+        2280,
+        300
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 521
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 511
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            585,
+            588
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 331,
+      "type": "CreateVideo",
+      "title": "🎬 Montar Vídeo",
+      "pos": [
+        2280,
+        400
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 554
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 566
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "slot_index": 0,
+          "links": [
+            524
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CreateVideo"
+      },
+      "widgets_values": [
+        25
+      ]
+    },
+    {
+      "id": 332,
+      "type": "D_LatentSyncNode",
+      "title": "👄 LipSync — Sincroniza boca com a voz",
+      "pos": [
+        2280,
+        500
+      ],
+      "size": [
+        380,
+        160
+      ],
+      "color": "#4a2a1a",
+      "bgcolor": "#2a1a0a",
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 595
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 564
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            554
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "D_LatentSyncNode"
+      },
+      "widgets_values": [
+        42
+      ]
+    },
+    {
+      "id": 333,
+      "type": "SaveVideo",
+      "title": "💾 OUTPUT FINAL — Vídeo com voz sincronizada",
+      "pos": [
+        2280,
+        700
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "color": "#4a3a00",
+      "bgcolor": "#2a2000",
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 524
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveVideo"
+      },
+      "widgets_values": [
+        "video/t2v_com_voz",
+        "auto",
+        "auto"
+      ]
+    },
+    {
+      "id": 340,
+      "type": "Note",
+      "title": "📋 COMO USAR",
+      "pos": [
+        0,
+        1280
+      ],
+      "size": [
+        2900,
+        220
+      ],
+      "flags": {},
+      "order": 99,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "WORKFLOW T2V — FOTO + PROMPT + VOZ (realista, 30 s)\n\n1. Node 300: foto da modelo (vertical)\n2. Node 302: prompt do que ela faz\n3. Node 304: voz de referência\n4. Nodes 305/306/307: texto falado (até ~190 caracteres cada) — são unidos em um áudio\n5. Executar\n\nPIPELINE: Wan 2.2 14B + LoRA 4 passos (cfg 1) em 4 segmentos de 121 frames a 16 fps (velocidade nativa), encadeados pelo último frame → interpolação FILM 16→32 fps → reamostra 25 fps → corta no tamanho do áudio (máx 15 s) → LatentSync → vídeo com voz.\nModelos: wan2.2 i2v high/low + lightx2v 4steps LoRA high/low + umt5 + vae + clip_vision + film_net_fp16 + Qwen3-TTS + LatentSync"
+      ]
+    },
+    {
+      "id": 351,
+      "type": "AudioToVideoFrames",
+      "title": "⏱️ Duração do áudio → nº de frames (25 fps, máx 15 s)",
+      "pos": [
+        760,
+        1040
+      ],
+      "size": [
+        340,
+        110
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 565
+        }
+      ],
+      "outputs": [
+        {
+          "name": "length",
+          "type": "INT",
+          "slot_index": 0,
+          "links": [
+            594
+          ]
+        },
+        {
+          "name": "seconds",
+          "type": "FLOAT",
+          "slot_index": 1,
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AudioToVideoFrames"
+      },
+      "widgets_values": [
+        25,
+        373
+      ]
+    },
+    {
+      "id": 352,
+      "type": "CLIPVisionEncode",
+      "title": "Codifica a foto p/ CLIP Vision (exigido pelo ComfyUI 0.30+)",
+      "pos": [
+        760,
+        480
+      ],
+      "size": [
+        300,
+        80
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 501
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 555
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP_VISION_OUTPUT",
+          "type": "CLIP_VISION_OUTPUT",
+          "slot_index": 0,
+          "links": [
+            556,
+            574
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPVisionEncode"
+      },
+      "widgets_values": [
+        "center"
+      ]
+    },
+    {
+      "id": 306,
+      "type": "AILab_Qwen3TTSVoiceClone",
+      "title": "🗣️ BLOCO 2 — texto (Qwen3 TTS)",
+      "pos": [
+        20,
+        1480
+      ],
+      "size": [
+        660,
+        420
+      ],
+      "color": "#4a1a4a",
+      "bgcolor": "#2a0a2a",
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "reference_audio",
+          "type": "AUDIO",
+          "link": 558
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "slot_index": 0,
+          "links": [
+            561
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AILab_Qwen3TTSVoiceClone"
+      },
+      "widgets_values": [
+        "Eu uso todo dia e a diferença apareceu logo na primeira semana.",
+        "1.7B",
+        "Portuguese",
+        "",
+        true,
+        false,
+        -1,
+        "fixed"
+      ]
+    },
+    {
+      "id": 307,
+      "type": "AILab_Qwen3TTSVoiceClone",
+      "title": "🗣️ BLOCO 3 — texto (Qwen3 TTS)",
+      "pos": [
+        20,
+        1920
+      ],
+      "size": [
+        660,
+        420
+      ],
+      "color": "#4a1a4a",
+      "bgcolor": "#2a0a2a",
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "reference_audio",
+          "type": "AUDIO",
+          "link": 559
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "slot_index": 0,
+          "links": [
+            563
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AILab_Qwen3TTSVoiceClone"
+      },
+      "widgets_values": [
+        "Clica no link da bio e garante o seu antes que acabe!",
+        "1.7B",
+        "Portuguese",
+        "",
+        true,
+        true,
+        -1,
+        "fixed"
+      ]
+    },
+    {
+      "id": 360,
+      "type": "AudioConcat",
+      "title": "🔗 Junta bloco 1 + 2",
+      "pos": [
+        720,
+        1480
+      ],
+      "size": [
+        300,
+        110
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio1",
+          "type": "AUDIO",
+          "link": 560
+        },
+        {
+          "name": "audio2",
+          "type": "AUDIO",
+          "link": 561
+        }
+      ],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "slot_index": 0,
+          "links": [
+            562
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AudioConcat"
+      },
+      "widgets_values": [
+        "after"
+      ]
+    },
+    {
+      "id": 361,
+      "type": "AudioConcat",
+      "title": "🔗 Junta (1+2) + 3 = ÁUDIO FINAL",
+      "pos": [
+        1060,
+        1480
+      ],
+      "size": [
+        300,
+        110
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio1",
+          "type": "AUDIO",
+          "link": 562
+        },
+        {
+          "name": "audio2",
+          "type": "AUDIO",
+          "link": 563
+        }
+      ],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "slot_index": 0,
+          "links": [
+            564,
+            565,
+            566
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AudioConcat"
+      },
+      "widgets_values": [
+        "after"
+      ]
+    },
+    {
+      "id": 370,
+      "type": "LoraLoaderModelOnly",
+      "title": "⚡ LoRA 4 passos — HIGH",
+      "pos": [
+        1100,
+        40
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 567
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            568
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors",
+        1.0
+      ]
+    },
+    {
+      "id": 371,
+      "type": "LoraLoaderModelOnly",
+      "title": "⚡ LoRA 4 passos — LOW",
+      "pos": [
+        1100,
+        160
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 569
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            570
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
+        1.0
+      ]
+    },
+    {
+      "id": 400,
+      "type": "WanImageToVideo",
+      "title": "⭐ WAN 2.2 I2V — SEG 2",
+      "pos": [
+        20,
+        2500
+      ],
+      "size": [
+        340,
+        210
+      ],
+      "color": "#6b1a1a",
+      "bgcolor": "#3a0f0f",
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 597
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 572
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 573
+        },
+        {
+          "name": "clip_vision_output",
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 574
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 586
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            577,
+            580
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "slot_index": 1,
+          "links": [
+            578,
+            581
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "slot_index": 2,
+          "links": [
+            579
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "WanImageToVideo"
+      },
+      "widgets_values": [
+        576,
+        1024,
+        121,
+        1
+      ]
+    },
+    {
+      "id": 401,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P1 — SEG 2",
+      "pos": [
+        20,
+        2740
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 575
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 577
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 578
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 579
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            582
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "enable",
+        44,
+        "fixed",
+        4,
+        1,
+        "euler",
+        "simple",
+        0,
+        2,
+        "enable"
+      ]
+    },
+    {
+      "id": 402,
+      "type": "KSamplerAdvanced",
+      "title": "🔁 KSampler P2 — SEG 2",
+      "pos": [
+        20,
+        3060
+      ],
+      "size": [
+        300,
+        300
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 576
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 580
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 581
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 582
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            583
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerAdvanced"
+      },
+      "widgets_values": [
+        "disable",
+        0,
+        "fixed",
+        4,
+        1,
+        "euler",
+        "simple",
+        2,
+        4,
+        "disable"
+      ]
+    },
+    {
+      "id": 403,
+      "type": "VAEDecode",
+      "title": "🎨 VAE Decode — SEG 2",
+      "pos": [
+        20,
+        3380
+      ],
+      "size": [
+        210,
+        46
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 583
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 584
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            587
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 501,
+      "type": "ImageFromBatch",
+      "title": "⏭️ Último frame SEG 1 → início SEG 2",
+      "pos": [
+        20,
+        3500
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 585
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            586
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        120,
+        1
+      ]
+    },
+    {
+      "id": 502,
+      "type": "ImageFromBatch",
+      "title": "✂️ SEG 2 sem 1º frame",
+      "pos": [
+        20,
+        3640
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 587
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            589
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        1,
+        120
+      ]
+    },
+    {
+      "id": 503,
+      "type": "ImageBatch",
+      "title": "🔗 Junta até SEG 2",
+      "pos": [
+        20,
+        3780
+      ],
+      "size": [
+        300,
+        60
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 588
+        },
+        {
+          "name": "image2",
+          "type": "IMAGE",
+          "link": 589
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            591
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageBatch"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 504,
+      "type": "FrameInterpolationModelLoader",
+      "title": "🎞️ Modelo FILM (interpolação)",
+      "pos": [
+        740,
+        3500
+      ],
+      "size": [
+        320,
+        58
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INTERP_MODEL",
+          "type": "INTERP_MODEL",
+          "slot_index": 0,
+          "links": [
+            590
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FrameInterpolationModelLoader"
+      },
+      "widgets_values": [
+        "film_net_fp16.safetensors"
+      ]
+    },
+    {
+      "id": 505,
+      "type": "FrameInterpolate",
+      "title": "🎞️ Interpolar 16→32 fps (movimento fluido)",
+      "pos": [
+        740,
+        3640
+      ],
+      "size": [
+        320,
+        80
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "interp_model",
+          "type": "INTERP_MODEL",
+          "link": 590
+        },
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 591
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            592
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FrameInterpolate"
+      },
+      "widgets_values": [
+        2
+      ]
+    },
+    {
+      "id": 506,
+      "type": "ResampleFrames",
+      "title": "⏱️ Reamostra 32→25 fps (exigido pelo LipSync)",
+      "pos": [
+        740,
+        3780
+      ],
+      "size": [
+        320,
+        100
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 592
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            593
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ResampleFrames"
+      },
+      "widgets_values": [
+        32.0,
+        25.0
+      ]
+    },
+    {
+      "id": 507,
+      "type": "ImageFromBatch",
+      "title": "✂️ Corta no tamanho do áudio",
+      "pos": [
+        740,
+        3920
+      ],
+      "size": [
+        300,
+        100
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 593
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 594
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            595
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        0,
+        749
+      ]
+    },
+    {
+      "id": 308,
+      "type": "CLIPTextEncode",
+      "title": "✏️ PROMPT SEG 2+ — câmera parada em close-up",
+      "pos": [
+        1800,
+        40
+      ],
+      "size": [
+        660,
+        200
+      ],
+      "color": "#1a5a1a",
+      "bgcolor": "#0a3a0a",
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 596
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            597
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "photorealistic UGC video of a young woman in a close-up shot from the chest up, the camera stays steady and completely still, she keeps talking directly to the camera with natural expressive lip movement, natural head movement and blinking, holding a skincare product near her face, natural skin texture with visible pores, soft natural window light, shot on a smartphone, 4k"
+      ]
+    }
+  ],
+  "links": [
+    [
+      500,
+      300,
+      0,
+      322,
+      4,
+      "IMAGE"
+    ],
+    [
+      502,
+      312,
+      0,
+      302,
+      0,
+      "CLIP"
+    ],
+    [
+      503,
+      302,
+      0,
+      322,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      504,
+      312,
+      0,
+      303,
+      0,
+      "CLIP"
+    ],
+    [
+      505,
+      303,
+      0,
+      322,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      506,
+      304,
+      0,
+      305,
+      0,
+      "AUDIO"
+    ],
+    [
+      510,
+      313,
+      0,
+      322,
+      2,
+      "VAE"
+    ],
+    [
+      511,
+      313,
+      0,
+      330,
+      1,
+      "VAE"
+    ],
+    [
+      512,
+      320,
+      0,
+      323,
+      0,
+      "MODEL"
+    ],
+    [
+      513,
+      321,
+      0,
+      324,
+      0,
+      "MODEL"
+    ],
+    [
+      514,
+      322,
+      0,
+      323,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      515,
+      322,
+      0,
+      324,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      516,
+      322,
+      1,
+      323,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      517,
+      322,
+      1,
+      324,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      518,
+      322,
+      2,
+      323,
+      3,
+      "LATENT"
+    ],
+    [
+      520,
+      323,
+      0,
+      324,
+      3,
+      "LATENT"
+    ],
+    [
+      521,
+      324,
+      0,
+      330,
+      0,
+      "LATENT"
+    ],
+    [
+      524,
+      331,
+      0,
+      333,
+      0,
+      "VIDEO"
+    ],
+    [
+      554,
+      332,
+      0,
+      331,
+      0,
+      "IMAGE"
+    ],
+    [
+      501,
+      301,
+      0,
+      352,
+      0,
+      "CLIP_VISION"
+    ],
+    [
+      555,
+      300,
+      0,
+      352,
+      1,
+      "IMAGE"
+    ],
+    [
+      556,
+      352,
+      0,
+      322,
+      3,
+      "CLIP_VISION_OUTPUT"
+    ],
+    [
+      558,
+      304,
+      0,
+      306,
+      0,
+      "AUDIO"
+    ],
+    [
+      559,
+      304,
+      0,
+      307,
+      0,
+      "AUDIO"
+    ],
+    [
+      560,
+      305,
+      0,
+      360,
+      0,
+      "AUDIO"
+    ],
+    [
+      561,
+      306,
+      0,
+      360,
+      1,
+      "AUDIO"
+    ],
+    [
+      562,
+      360,
+      0,
+      361,
+      0,
+      "AUDIO"
+    ],
+    [
+      563,
+      307,
+      0,
+      361,
+      1,
+      "AUDIO"
+    ],
+    [
+      564,
+      361,
+      0,
+      332,
+      1,
+      "AUDIO"
+    ],
+    [
+      565,
+      361,
+      0,
+      351,
+      0,
+      "AUDIO"
+    ],
+    [
+      566,
+      361,
+      0,
+      331,
+      1,
+      "AUDIO"
+    ],
+    [
+      567,
+      310,
+      0,
+      370,
+      0,
+      "MODEL"
+    ],
+    [
+      568,
+      370,
+      0,
+      320,
+      0,
+      "MODEL"
+    ],
+    [
+      569,
+      311,
+      0,
+      371,
+      0,
+      "MODEL"
+    ],
+    [
+      570,
+      371,
+      0,
+      321,
+      0,
+      "MODEL"
+    ],
+    [
+      572,
+      303,
+      0,
+      400,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      573,
+      313,
+      0,
+      400,
+      2,
+      "VAE"
+    ],
+    [
+      574,
+      352,
+      0,
+      400,
+      3,
+      "CLIP_VISION_OUTPUT"
+    ],
+    [
+      575,
+      320,
+      0,
+      401,
+      0,
+      "MODEL"
+    ],
+    [
+      576,
+      321,
+      0,
+      402,
+      0,
+      "MODEL"
+    ],
+    [
+      577,
+      400,
+      0,
+      401,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      578,
+      400,
+      1,
+      401,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      579,
+      400,
+      2,
+      401,
+      3,
+      "LATENT"
+    ],
+    [
+      580,
+      400,
+      0,
+      402,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      581,
+      400,
+      1,
+      402,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      582,
+      401,
+      0,
+      402,
+      3,
+      "LATENT"
+    ],
+    [
+      583,
+      402,
+      0,
+      403,
+      0,
+      "LATENT"
+    ],
+    [
+      584,
+      313,
+      0,
+      403,
+      1,
+      "VAE"
+    ],
+    [
+      585,
+      330,
+      0,
+      501,
+      0,
+      "IMAGE"
+    ],
+    [
+      586,
+      501,
+      0,
+      400,
+      4,
+      "IMAGE"
+    ],
+    [
+      587,
+      403,
+      0,
+      502,
+      0,
+      "IMAGE"
+    ],
+    [
+      588,
+      330,
+      0,
+      503,
+      0,
+      "IMAGE"
+    ],
+    [
+      589,
+      502,
+      0,
+      503,
+      1,
+      "IMAGE"
+    ],
+    [
+      590,
+      504,
+      0,
+      505,
+      0,
+      "INTERP_MODEL"
+    ],
+    [
+      591,
+      503,
+      0,
+      505,
+      1,
+      "IMAGE"
+    ],
+    [
+      592,
+      505,
+      0,
+      506,
+      0,
+      "IMAGE"
+    ],
+    [
+      593,
+      506,
+      0,
+      507,
+      0,
+      "IMAGE"
+    ],
+    [
+      594,
+      351,
+      0,
+      507,
+      1,
+      "INT"
+    ],
+    [
+      595,
+      507,
+      0,
+      332,
+      0,
+      "IMAGE"
+    ],
+    [
+      596,
+      312,
+      0,
+      308,
+      0,
+      "CLIP"
+    ],
+    [
+      597,
+      308,
+      0,
+      400,
+      0,
+      "CONDITIONING"
+    ]
+  ]
+}
