@@ -2757,7 +2757,7 @@
     {
       "id": 811,
       "type": "ImageUpscaleWithModel",
-      "title": "🔍 Upscale 2x (pós-LipSync)",
+      "title": "🔍 Upscale 2x (pós-geração)",
       "pos": [
         1900,
         660
