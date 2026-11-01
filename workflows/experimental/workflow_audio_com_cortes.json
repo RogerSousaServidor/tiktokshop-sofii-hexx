@@ -941,7 +941,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "WORKFLOW ÁUDIO COM CORTES — 480x832 nativo + Lanczos 720x1280 (sem LipSync, sem RealESRGAN)\n\nANTES DE RODAR:\n1. Suba Sofii_audio_novo.m4a (24 s) em ComfyUI/input/ (node 304)\n2. Node 363: cole a transcrição EXATA desse áudio (vazio = modo x-vector, timbre menos estável)\n3. Node 300: foto | Nodes 305/306/307: textos (≤ ~20 s cada) | Nodes 302/308: prompts\n\nPIPELINE: voz Qwen3 (ref 24 s, seed 42) → 1.08x → Wan 2.2 480x832 (4 segmentos) → FILM → 25 fps → corta pelo áudio (máx 30 s) → Lanczos 720x1280 (crop central) → vídeo + voz."
+        "WORKFLOW ÁUDIO COM CORTES — 480x832 nativo + Lanczos 720x1280 (sem LipSync, sem RealESRGAN)\n\nANTES DE RODAR:\n1. Suba Sofii_audio_novo.m4a (24 s) em ComfyUI/input/ (node 304)\n2. Node 363: transcrição do Sofii_audio_novo.m4a já preenchida (se trocar o áudio, troque o texto)\n3. Node 300: foto | Nodes 305/306/307: textos (≤ ~20 s cada) | Nodes 302/308: prompts\n\nPIPELINE: voz Qwen3 (ref 24 s, seed 42) → 1.08x → Wan 2.2 480x832 (4 segmentos) → FILM → 25 fps → corta pelo áudio (máx 30 s) → Lanczos 720x1280 (crop central) → vídeo + voz."
       ]
     },
     {
@@ -2688,7 +2688,7 @@
     {
       "id": 363,
       "type": "PrimitiveStringMultiline",
-      "title": "📝 TRANSCRIÇÃO EXATA do Sofii_audio_novo.m4a (24 s) — PREENCHER antes de rodar",
+      "title": "📝 TRANSCRIÇÃO EXATA do Sofii_audio_novo.m4a (24 s)",
       "pos": [
         20,
         1010
@@ -2719,7 +2719,7 @@
         "Node name for S&R": "PrimitiveStringMultiline"
       },
       "widgets_values": [
-        ""
+        "Será que vai demorar muito para sua ficha cair que eu sou apaixonada por você e que eu só quero você? Você já sentiu que o cérebro simplesmente trava no meio do dia? Essa névoa mental constante destrói sua produtividade e esgota sua energia sem você perceber. Isso acaba agora. Quer recuperar sua clareza de forma definitiva? O link com desconto exclusivo está aqui na sacolinha do TikTok Shop, garanta o seu antes que acabe."
       ]
     },
     {
