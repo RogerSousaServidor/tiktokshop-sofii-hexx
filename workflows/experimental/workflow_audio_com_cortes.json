@@ -2,7 +2,7 @@
   "id": "wan22-t2v-foto-voz-lipsync",
   "revision": 1,
   "last_node_id": 812,
-  "last_link_id": 647,
+  "last_link_id": 648,
   "version": 0.4,
   "config": {},
   "extra": {
@@ -863,7 +863,7 @@
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 645
+          "link": 648
         },
         {
           "name": "audio",
@@ -941,7 +941,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "WORKFLOW ÁUDIO COM CORTES — 480x832 nativo + Lanczos 720x1280 (sem LipSync, sem RealESRGAN)\n\nANTES DE RODAR:\n1. Suba Sofii_audio_novo.m4a (24 s) em ComfyUI/input/ (node 304)\n2. Node 363: transcrição do Sofii_audio_novo.m4a já preenchida (se trocar o áudio, troque o texto)\n3. Node 300: foto | Nodes 305/306/307: textos (≤ ~20 s cada) | Nodes 302/308: prompts\n\nPIPELINE: voz Qwen3 (ref 24 s, seed 42) → 1.08x → Wan 2.2 480x832 (4 segmentos) → FILM → 25 fps → corta pelo áudio (máx 30 s) → Lanczos 720x1280 (crop central) → vídeo + voz."
+        "WORKFLOW ÁUDIO COM CORTES — 480x832 + FILM, sem LipSync, sem upscale, sem redimensionar no grafo\n\nANTES DE RODAR:\n1. Sofii_audio_novo.m4a (24 s) em ComfyUI/input/ (node 304)\n2. Node 363: transcrição do áudio (já preenchida; se trocar o áudio, troque o texto)\n3. Node 300: foto | Nodes 305/306/307: textos (≤ ~20 s cada) | Nodes 302/308: prompts\n\nPIPELINE: voz Qwen3 (ref 24 s, seed 42) → 1.08x → Wan 2.2 480x832 (4 segmentos) → FILM → 25 fps → corta pelo áudio (máx 30 s) → vídeo + voz (480x832).\n\nREDIMENSIONAR NA PÓS (Lanczos 720x1280), fora do ComfyUI, para poupar RAM:\nffmpeg -i video.mp4 -vf scale=720:1280:flags=lanczos -c:a copy saida.mp4\nSugestão de início do ComfyUI: --cache-none (reduz RAM)."
       ]
     },
     {
@@ -2588,7 +2588,7 @@
           "type": "IMAGE",
           "slot_index": 0,
           "links": [
-            647
+            648
           ]
         }
       ],
@@ -2720,47 +2720,6 @@
       },
       "widgets_values": [
         "Será que vai demorar muito para sua ficha cair que eu sou apaixonada por você e que eu só quero você? Você já sentiu que o cérebro simplesmente trava no meio do dia? Essa névoa mental constante destrói sua produtividade e esgota sua energia sem você perceber. Isso acaba agora. Quer recuperar sua clareza de forma definitiva? O link com desconto exclusivo está aqui na sacolinha do TikTok Shop, garanta o seu antes que acabe."
-      ]
-    },
-    {
-      "id": 812,
-      "type": "ImageScale",
-      "title": "📐 Redimensiona p/ 720x1280 (Lanczos, sem upscale pesado)",
-      "pos": [
-        1900,
-        780
-      ],
-      "size": [
-        340,
-        90
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 647
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            645
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ImageScale"
-      },
-      "widgets_values": [
-        "lanczos",
-        720,
-        1280,
-        "center"
       ]
     }
   ],
@@ -3566,18 +3525,10 @@
       "STRING"
     ],
     [
-      645,
-      812,
-      0,
-      331,
-      0,
-      "IMAGE"
-    ],
-    [
-      647,
+      648,
       513,
       0,
-      812,
+      331,
       0,
       "IMAGE"
     ]
