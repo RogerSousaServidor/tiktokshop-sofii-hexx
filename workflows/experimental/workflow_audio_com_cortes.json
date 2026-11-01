@@ -2,7 +2,7 @@
   "id": "wan22-t2v-foto-voz-lipsync",
   "revision": 1,
   "last_node_id": 812,
-  "last_link_id": 646,
+  "last_link_id": 647,
   "version": 0.4,
   "config": {},
   "extra": {
@@ -238,7 +238,7 @@
     {
       "id": 304,
       "type": "LoadAudio",
-      "title": "🎤 VOZ DA MODELO — Carregue o MP4 aqui",
+      "title": "🎤 VOZ DA MODELO — Sofii_audio_novo.m4a (24 s) em input/",
       "pos": [
         20,
         920
@@ -269,7 +269,7 @@
         "Node name for S&R": "LoadAudio"
       },
       "widgets_values": [
-        "VOZ_DA_MODELO.mp4"
+        "Sofii_audio_novo.m4a"
       ]
     },
     {
@@ -941,7 +941,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "VÍDEO SEM LIPSYNC — 480x832 + upscale 720x1280 + voz por cima\n\nPRÉ-REQUISITO (uma vez por pod): RealESRGAN_x2plus.pth em models/upscale_models/\n\n1. Node 300: foto (produto em mãos, sem fala em close)\n2. Nodes 305/306/307: texto de cada bloco (≤ ~20 s), voz de referência 304 + transcrição 363\n3. Nodes 302/308: prompts que mostram o produto (boca fechada ou sorriso, sem falar)\n4. Executar: o áudio (1.08x) é a duração; o vídeo é cortado pelo áudio (máx 30 s)\n5. Montagem de cortes e legendas na pós\n\nPIPELINE: voz Qwen3 → Wan 2.2 480x832 (4 segmentos) → FILM → 25 fps → corta pelo áudio → RealESRGAN x2 → 720x1280 → vídeo + voz. Sem LatentSync."
+        "WORKFLOW ÁUDIO COM CORTES — 480x832 nativo + Lanczos 720x1280 (sem LipSync, sem RealESRGAN)\n\nANTES DE RODAR:\n1. Suba Sofii_audio_novo.m4a (24 s) em ComfyUI/input/ (node 304)\n2. Node 363: cole a transcrição EXATA desse áudio (vazio = modo x-vector, timbre menos estável)\n3. Node 300: foto | Nodes 305/306/307: textos (≤ ~20 s cada) | Nodes 302/308: prompts\n\nPIPELINE: voz Qwen3 (ref 24 s, seed 42) → 1.08x → Wan 2.2 480x832 (4 segmentos) → FILM → 25 fps → corta pelo áudio (máx 30 s) → Lanczos 720x1280 (crop central) → vídeo + voz."
       ]
     },
     {
@@ -2588,7 +2588,7 @@
           "type": "IMAGE",
           "slot_index": 0,
           "links": [
-            646
+            647
           ]
         }
       ],
@@ -2688,7 +2688,7 @@
     {
       "id": 363,
       "type": "PrimitiveStringMultiline",
-      "title": "📝 TRANSCRIÇÃO EXATA da voz de referência (nodes 304) — preencha p/ travar a voz",
+      "title": "📝 TRANSCRIÇÃO EXATA do Sofii_audio_novo.m4a (24 s) — PREENCHER antes de rodar",
       "pos": [
         20,
         1010
@@ -2719,86 +2719,13 @@
         "Node name for S&R": "PrimitiveStringMultiline"
       },
       "widgets_values": [
-        "Será que vai demorar muito para sua ficha cair que eu sou apaixonada por você e que eu só quero você?"
+        ""
       ]
-    },
-    {
-      "id": 810,
-      "type": "UpscaleModelLoader",
-      "title": "🔍 Modelo de upscale (RealESRGAN x2)",
-      "pos": [
-        1520,
-        660
-      ],
-      "size": [
-        340,
-        90
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "UPSCALE_MODEL",
-          "type": "UPSCALE_MODEL",
-          "links": [
-            642
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "UpscaleModelLoader"
-      },
-      "widgets_values": [
-        "RealESRGAN_x2plus.pth"
-      ]
-    },
-    {
-      "id": 811,
-      "type": "ImageUpscaleWithModel",
-      "title": "🔍 Upscale 2x (pós-geração)",
-      "pos": [
-        1900,
-        660
-      ],
-      "size": [
-        340,
-        90
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "upscale_model",
-          "type": "UPSCALE_MODEL",
-          "link": 642
-        },
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 646
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            644
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ImageUpscaleWithModel"
-      },
-      "widgets_values": []
     },
     {
       "id": 812,
       "type": "ImageScale",
-      "title": "📐 Ajusta para 720x1280 (final)",
+      "title": "📐 Redimensiona p/ 720x1280 (Lanczos, sem upscale pesado)",
       "pos": [
         1900,
         780
@@ -2814,7 +2741,7 @@
         {
           "name": "image",
           "type": "IMAGE",
-          "link": 644
+          "link": 647
         }
       ],
       "outputs": [
@@ -2833,7 +2760,7 @@
         "lanczos",
         720,
         1280,
-        "disabled"
+        "center"
       ]
     }
   ],
@@ -3639,22 +3566,6 @@
       "STRING"
     ],
     [
-      642,
-      810,
-      0,
-      811,
-      0,
-      "UPSCALE_MODEL"
-    ],
-    [
-      644,
-      811,
-      0,
-      812,
-      0,
-      "IMAGE"
-    ],
-    [
       645,
       812,
       0,
@@ -3663,11 +3574,11 @@
       "IMAGE"
     ],
     [
-      646,
+      647,
       513,
       0,
-      811,
-      1,
+      812,
+      0,
       "IMAGE"
     ]
   ]
