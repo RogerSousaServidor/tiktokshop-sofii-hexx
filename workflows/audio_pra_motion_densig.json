@@ -1,0 +1,122 @@
+{
+  "id": "qwentts-audio-only-3blocos",
+  "revision": 1,
+  "last_node_id": 380,
+  "last_link_id": 700,
+  "version": 0.4,
+  "config": {},
+  "extra": {"ds": {"scale": 0.6, "offset": [0, 0]}},
+  "groups": [
+    {"title": "📥 REFERÊNCIA — voz + transcrição", "bounding": [0, 0, 700, 560], "color": "#1a4a1a", "font_size": 18, "flags": {}},
+    {"title": "🗣️ BLOCOS QWEN3 TTS (≤20s cada) — para mais tempo, duplique um bloco e encadeie outro AudioConcat", "bounding": [0, 580, 700, 1400], "color": "#4a1a4a", "font_size": 18, "flags": {}},
+    {"title": "🔗 CONCAT + OUTPUT", "bounding": [720, 580, 1000, 500], "color": "#4a1a1a", "font_size": 18, "flags": {}}
+  ],
+  "nodes": [
+    {
+      "id": 304, "type": "LoadAudio",
+      "title": "🎤 VOZ DA MODELO — Sofii_audio_novo.m4a (24 s) em input/",
+      "pos": [20, 60], "size": [320, 80], "color": "#4a1a4a", "bgcolor": "#2a0a2a", "flags": {}, "order": 0, "mode": 0,
+      "inputs": [],
+      "outputs": [{"name": "AUDIO", "type": "AUDIO", "slot_index": 0, "links": [506, 558, 559]}],
+      "properties": {"Node name for S&R": "LoadAudio"},
+      "widgets_values": ["Sofii_audio_novo.m4a"]
+    },
+    {
+      "id": 363, "type": "PrimitiveStringMultiline",
+      "title": "📝 TRANSCRIÇÃO EXATA do Sofii_audio_novo.m4a (24 s)",
+      "pos": [20, 180], "size": [660, 340], "color": "#4a1a4a", "bgcolor": "#2a0a2a", "flags": {}, "order": 1, "mode": 0,
+      "inputs": [],
+      "outputs": [{"name": "STRING", "type": "STRING", "slot_index": 0, "links": [639, 640, 641]}],
+      "properties": {"Node name for S&R": "PrimitiveStringMultiline"},
+      "widgets_values": ["Será que vai demorar muito para sua ficha cair que eu sou apaixonada por você e que eu só quero você? Você já sentiu que o cérebro simplesmente trava no meio do dia? Essa névoa mental constante destrói sua produtividade e esgota sua energia sem você perceber. Isso acaba agora. Quer recuperar sua clareza de forma definitiva? O link com desconto exclusivo está aqui na sacolinha do TikTok Shop, garanta o seu antes que acabe."]
+    },
+    {
+      "id": 305, "type": "AILab_Qwen3TTSVoiceClone",
+      "title": "🗣️ BLOCO 1 — texto (Qwen3 TTS) 0:00–0:20",
+      "pos": [20, 620], "size": [660, 420], "color": "#4a1a4a", "bgcolor": "#2a0a2a", "flags": {}, "order": 2, "mode": 0,
+      "inputs": [
+        {"name": "reference_audio", "type": "AUDIO", "link": 506},
+        {"name": "reference_text", "type": "STRING", "widget": {"name": "reference_text"}, "link": 639}
+      ],
+      "outputs": [{"name": "audio", "type": "AUDIO", "slot_index": 0, "links": [560]}],
+      "properties": {"Node name for S&R": "AILab_Qwen3TTSVoiceClone"},
+      "widgets_values": ["Gente, esse produto transformou minha pele em 7 dias! Corre lá no link da bio!", "1.7B", "Portuguese", "", false, false, 42, "fixed"]
+    },
+    {
+      "id": 306, "type": "AILab_Qwen3TTSVoiceClone",
+      "title": "🗣️ BLOCO 2 — texto (Qwen3 TTS) 0:20–0:40",
+      "pos": [20, 1060], "size": [660, 420], "color": "#4a1a4a", "bgcolor": "#2a0a2a", "flags": {}, "order": 3, "mode": 0,
+      "inputs": [
+        {"name": "reference_audio", "type": "AUDIO", "link": 558},
+        {"name": "reference_text", "type": "STRING", "widget": {"name": "reference_text"}, "link": 640}
+      ],
+      "outputs": [{"name": "audio", "type": "AUDIO", "slot_index": 0, "links": [561]}],
+      "properties": {"Node name for S&R": "AILab_Qwen3TTSVoiceClone"},
+      "widgets_values": ["Eu uso todo dia e a diferença apareceu logo na primeira semana.", "1.7B", "Portuguese", "", false, false, 42, "fixed"]
+    },
+    {
+      "id": 307, "type": "AILab_Qwen3TTSVoiceClone",
+      "title": "🗣️ BLOCO 3 — texto (Qwen3 TTS) 0:40–1:00",
+      "pos": [20, 1500], "size": [660, 420], "color": "#4a1a4a", "bgcolor": "#2a0a2a", "flags": {}, "order": 4, "mode": 0,
+      "inputs": [
+        {"name": "reference_audio", "type": "AUDIO", "link": 559},
+        {"name": "reference_text", "type": "STRING", "widget": {"name": "reference_text"}, "link": 641}
+      ],
+      "outputs": [{"name": "audio", "type": "AUDIO", "slot_index": 0, "links": [563]}],
+      "properties": {"Node name for S&R": "AILab_Qwen3TTSVoiceClone"},
+      "widgets_values": ["Clica no link da bio e garante o seu antes que acabe!", "1.7B", "Portuguese", "", false, false, 42, "fixed"]
+    },
+    {
+      "id": 360, "type": "AudioConcat", "title": "🔗 Junta bloco 1 + 2",
+      "pos": [740, 620], "size": [300, 110], "flags": {}, "order": 5, "mode": 0,
+      "inputs": [
+        {"name": "audio1", "type": "AUDIO", "link": 560},
+        {"name": "audio2", "type": "AUDIO", "link": 561}
+      ],
+      "outputs": [{"name": "AUDIO", "type": "AUDIO", "slot_index": 0, "links": [562]}],
+      "properties": {"Node name for S&R": "AudioConcat"},
+      "widgets_values": ["after"]
+    },
+    {
+      "id": 361, "type": "AudioConcat", "title": "🔗 Junta (1+2) + 3 = ÁUDIO FINAL",
+      "pos": [1080, 620], "size": [300, 110], "flags": {}, "order": 6, "mode": 0,
+      "inputs": [
+        {"name": "audio1", "type": "AUDIO", "link": 562},
+        {"name": "audio2", "type": "AUDIO", "link": 563}
+      ],
+      "outputs": [{"name": "AUDIO", "type": "AUDIO", "slot_index": 0, "links": [638]}],
+      "properties": {"Node name for S&R": "AudioConcat"},
+      "widgets_values": ["after"]
+    },
+    {
+      "id": 362, "type": "AudioSpeed", "title": "⏩ Acelera fala (pitch preservado) — 1.08x",
+      "pos": [1420, 620], "size": [300, 80], "color": "#4a1a4a", "bgcolor": "#2a0a2a", "flags": {}, "order": 7, "mode": 0,
+      "inputs": [{"name": "audio", "type": "AUDIO", "link": 638}],
+      "outputs": [{"name": "AUDIO", "type": "AUDIO", "slot_index": 0, "links": [700]}],
+      "properties": {"Node name for S&R": "AudioSpeed"},
+      "widgets_values": [1.08]
+    },
+    {
+      "id": 380, "type": "SaveAudio", "title": "💾 OUTPUT FINAL — ÁUDIO",
+      "pos": [1420, 760], "size": [300, 120], "color": "#4a3a00", "bgcolor": "#2a2000", "flags": {}, "order": 8, "mode": 0,
+      "inputs": [{"name": "audio", "type": "AUDIO", "link": 700}],
+      "outputs": [],
+      "properties": {"Node name for S&R": "SaveAudio"},
+      "widgets_values": ["audio/sofii_qwentts_final"]
+    }
+  ],
+  "links": [
+    [506, 304, 0, 305, 0, "AUDIO"],
+    [558, 304, 0, 306, 0, "AUDIO"],
+    [559, 304, 0, 307, 0, "AUDIO"],
+    [639, 363, 0, 305, 1, "STRING"],
+    [640, 363, 0, 306, 1, "STRING"],
+    [641, 363, 0, 307, 1, "STRING"],
+    [560, 305, 0, 360, 0, "AUDIO"],
+    [561, 306, 0, 360, 1, "AUDIO"],
+    [562, 360, 0, 361, 0, "AUDIO"],
+    [563, 307, 0, 361, 1, "AUDIO"],
+    [638, 361, 0, 362, 0, "AUDIO"],
+    [700, 362, 0, 380, 0, "AUDIO"]
+  ]
+}
