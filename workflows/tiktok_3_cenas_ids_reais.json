@@ -1,7 +1,7 @@
 {
   "id": "tiktok-shop-3-cenas-real",
   "revision": 1,
-  "last_node_id": 300,
+  "last_node_id": 301,
   "last_link_id": 600,
   "version": 0.4,
   "config": {},
@@ -3504,6 +3504,30 @@
       "widgets_values": [
         "TIKTOK SHOP — 3 CENAS\n\nCENA 1 GANCHO: Node 145 (foto) + Node 158 (video ref energetico) + Node 99 (edite o prompt) → Output: CENA1_gancho.mp4\nCENA 2 CORPO:  Node 178 (foto) + Node 174 (video ref suave)      + Node 179 (edite o prompt) → Output: CENA2_corpo.mp4\nCENA 3 CTA:    Node 200 (foto) + Node 204 (video ref urgente)    + Node 208 (edite o prompt) → Output: CENA3_cta.mp4\n\nDepois: concatene os 3 no Remotion → video final TikTok Shop!"
       ]
+    },
+    {
+      "id": 301,
+      "type": "Note",
+      "pos": [
+        470,
+        1150
+      ],
+      "size": [
+        400,
+        990
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "📖 GUIA / GUIDE — modelos e uso",
+      "properties": {},
+      "widgets_values": [
+        "📦 MODELOS NECESSÁRIOS (colocar em ComfyUI/models/...)\n- wan2.2_fun_control_high_noise_14B_fp8_scaled.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/tree/main/split_files/diffusion_models\n- wan2.2_fun_control_low_noise_14B_fp8_scaled.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/tree/main/split_files/diffusion_models\n- umt5_xxl_fp8_e4m3fn_scaled.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/blob/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors\n- wan_2.1_vae.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/blob/main/split_files/vae/wan_2.1_vae.safetensors\n- wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/tree/main/split_files/loras\n- wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/tree/main/split_files/loras\n\n🛠 COMO USAR\n1. Coloque a foto da modelo no node 📸 (LoadImage) ao lado desta nota.\n2. Ajuste o(s) prompt(s) positivo e negativo conforme o produto/cena.\n3. Confira os parâmetros de duração/FPS e o texto de voz (se houver).\n4. Clique em Queue.\n\n⚠️ Use fp8 e --cache-none; a RAM precisa passar de 60 GB para vídeos longos.\n\n———————— ENGLISH ————————\n\n📦 REQUIRED MODELS (place in ComfyUI/models/...)\n- wan2.2_fun_control_high_noise_14B_fp8_scaled.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/tree/main/split_files/diffusion_models\n- wan2.2_fun_control_low_noise_14B_fp8_scaled.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/tree/main/split_files/diffusion_models\n- umt5_xxl_fp8_e4m3fn_scaled.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/blob/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors\n- wan_2.1_vae.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/blob/main/split_files/vae/wan_2.1_vae.safetensors\n- wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/tree/main/split_files/loras\n- wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/tree/main/split_files/loras\n\n🛠 HOW TO USE\n1. Put the model photo in the 📸 LoadImage node next to this note.\n2. Adjust the positive and negative prompt(s) for the product/scene.\n3. Check duration/FPS settings and voice text (if any).\n4. Click Queue.\n\n⚠️ Use fp8 and --cache-none; RAM must exceed 60 GB for long videos."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
     }
   ],
   "links": [

@@ -1,7 +1,7 @@
 {
   "id": "workflow-tiktok-shop-completo",
   "revision": 1,
-  "last_node_id": 25,
+  "last_node_id": 26,
   "last_link_id": 35,
   "version": "0.4",
   "config": {},
@@ -1076,6 +1076,30 @@
       "widgets_values": [
         "WORKFLOW COMPLETO — TikTok Shop\n\nSTEP 1 — INPUTS:\n  Node 1: Coloque a foto da modelo COM o produto\n  Node 2: Coloque um vídeo de movimento suave de referencia\n\nSTEP 2 — GERAR VIDEO:\n  Node 7: Edite o prompt positivo descrevendo o movimento\n  Node 13 (WAN 2.2): Ajuste largura/altura/duracao conforme VRAM\n    - 48GB: ate 300 frames (10 seg)\n    - 80GB: ate 600 frames (20 seg)\n\nSTEP 3 — VOZ:\n  Node 18: Carregue o MP4 com a voz da modelo (6+ seg)\n  Node 19: DIGITE O TEXTO que ela vai falar\n\nSTEP 4 — LIP SYNC:\n  Node 20: Sincroniza automaticamente a boca com a voz\n\nSTEP 5 — OUTPUT:\n  Node 21: Video final salvo em ComfyUI/output/video/\n\nNODES NECESSARIOS (instalar pelo ComfyUI Manager):\n  - ComfyUI-WanVideoWrapper (ja instalado)\n  - ComfyUI-QwenTTS (voice clone)\n  - ComfyUI-LatentSync-Node (lip sync)"
       ]
+    },
+    {
+      "id": 26,
+      "type": "Note",
+      "pos": [
+        340,
+        60
+      ],
+      "size": [
+        400,
+        814
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "📖 GUIA / GUIDE — modelos e uso",
+      "properties": {},
+      "widgets_values": [
+        "📦 MODELOS NECESSÁRIOS (colocar em ComfyUI/models/...)\n- wan2.2_fun_control_high_noise_14B_fp8_scaled.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/tree/main/split_files/diffusion_models\n- wan2.2_fun_control_low_noise_14B_fp8_scaled.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/tree/main/split_files/diffusion_models\n- umt5_xxl_fp8_e4m3fn_scaled.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/blob/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors\n- wan_2.1_vae.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/blob/main/split_files/vae/wan_2.1_vae.safetensors\n\n🛠 COMO USAR\n1. Coloque a foto da modelo no node 📸 (LoadImage) ao lado desta nota.\n2. Ajuste o(s) prompt(s) positivo e negativo conforme o produto/cena.\n3. Confira os parâmetros de duração/FPS e o texto de voz (se houver).\n4. Clique em Queue.\n\n⚠️ Use fp8 e --cache-none; a RAM precisa passar de 60 GB para vídeos longos.\n\n———————— ENGLISH ————————\n\n📦 REQUIRED MODELS (place in ComfyUI/models/...)\n- wan2.2_fun_control_high_noise_14B_fp8_scaled.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/tree/main/split_files/diffusion_models\n- wan2.2_fun_control_low_noise_14B_fp8_scaled.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/tree/main/split_files/diffusion_models\n- umt5_xxl_fp8_e4m3fn_scaled.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/blob/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors\n- wan_2.1_vae.safetensors\n  https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/blob/main/split_files/vae/wan_2.1_vae.safetensors\n\n🛠 HOW TO USE\n1. Put the model photo in the 📸 LoadImage node next to this note.\n2. Adjust the positive and negative prompt(s) for the product/scene.\n3. Check duration/FPS settings and voice text (if any).\n4. Click Queue.\n\n⚠️ Use fp8 and --cache-none; RAM must exceed 60 GB for long videos."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
     }
   ],
   "links": [
