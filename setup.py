@@ -36,6 +36,7 @@ CUSTOM_NODES = [
     ("ComfyUI-WanVideoWrapper", "https://github.com/kijai/ComfyUI-WanVideoWrapper.git", True),
     ("ComfyUI-FishAudioS2", "https://github.com/imshivamohan/comfyui-fishaudios2.git", False),  # repo original (Saganaki22) saiu do ar (404) em 2026-10-14; fork identico, mesmas classes de no (FishS2VoiceCloneTTS etc) — deps auto-instalam no startup
     ("ComfyUI-QwenTTS", "https://github.com/1038lab/ComfyUI-QwenTTS.git", False),  # TTS pt-BR (Qwen3-TTS); modelos baixam no 1o uso; deps: pip install -r requirements.txt no venv
+    ("ComfyUI-GGUF", "https://github.com/city96/ComfyUI-GGUF.git", True),  # UnetLoaderGGUF: carregador Wan 2.2 GGUF (workflow_60s_4blocos_gguf)
     ("ComfyUI-LatentSync-Node", "https://github.com/iVideoGameBoss/ComfyUI-LatentSync-Node.git", True),
 ]
 for nome, url, pip_req in CUSTOM_NODES:
