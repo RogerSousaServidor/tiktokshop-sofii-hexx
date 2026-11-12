@@ -88,6 +88,88 @@ class AudioSpeed:
         t = min(o.shape[-1] for o in outs)
         return ({"waveform": torch.stack([o[..., :t] for o in outs]).to(wav.dtype), "sample_rate": sr},)
 
+class AudioSFXMix:
+    """Mistura efeitos sonoros (arquivos em ComfyUI/input/sfx/ ou input/) na fala, por instante.
+    effects: uma linha por efeito -> 'segundos, arquivo, volume'  ex: 15.0, pop.wav, 0.6   ('#' = comentario)."""
 
-NODE_CLASS_MAPPINGS = {"AudioToVideoFrames": AudioToVideoFrames, "ResampleFrames": ResampleFrames, "AudioSpeed": AudioSpeed}
-NODE_DISPLAY_NAME_MAPPINGS = {"AudioToVideoFrames": "Audio → Video Frames (4n+1)", "ResampleFrames": "Resample Frames (fps → fps)", "AudioSpeed": "Audio Speed (pitch preservado)"}
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {
+            "audio": ("AUDIO",),
+            "effects": ("STRING", {"multiline": True, "default": "0.3, whoosh.wav, 0.5\n15.0, pop.wav, 0.6"}),
+        }}
+
+    RETURN_TYPES = ("AUDIO",)
+    RETURN_NAMES = ("AUDIO",)
+    FUNCTION = "run"
+    CATEGORY = "audio/utils"
+
+    @staticmethod
+    def _input_dir():
+        try:
+            import folder_paths
+            return folder_paths.get_input_directory()
+        except Exception:
+            return "input"
+
+    @staticmethod
+    def _parse(text):
+        out = []
+        for raw in text.splitlines():
+            line = raw.strip()
+            if not line or line.startswith("#"):
+                continue
+            parts = [p.strip() for p in line.split(",")]
+            if len(parts) < 2:
+                raise ValueError(f"linha invalida (use 'segundos, arquivo, volume'): {raw!r}")
+            out.append((float(parts[0]), parts[1], float(parts[2]) if len(parts) > 2 and parts[2] else 0.6))
+        return out
+
+    @staticmethod
+    def _mix(x, sr, lines, base_dir):
+        """x: ndarray float32 [C, T]. Retorna ndarray [C, T] com os efeitos somados."""
+        import os
+        import subprocess
+        import numpy as np
+        ff = AudioSpeed._ffmpeg()
+        c, total = x.shape
+        y = x.copy()
+        for t, name, vol in lines:
+            f = None
+            for d in (os.path.join(base_dir, "sfx"), base_dir):
+                cand = name if os.path.isabs(name) else os.path.join(d, name)
+                if os.path.exists(cand):
+                    f = cand
+                    break
+            if f is None:
+                raise FileNotFoundError(f"efeito nao encontrado: {name} (procurado em {base_dir}/sfx e {base_dir})")
+            cmd = [ff, "-v", "error", "-i", f, "-f", "f32le", "-ar", str(sr), "-ac", str(c), "pipe:1"]
+            r = subprocess.run(cmd, capture_output=True, check=True)
+            e = np.frombuffer(r.stdout, dtype=np.float32).reshape(-1, c).T * vol
+            start = max(int(round(t * sr)), 0)
+            if start >= total:
+                continue
+            n = min(e.shape[1], total - start)
+            y[:, start:start + n] += e[:, :n]
+        peak = float(np.abs(y).max()) if y.size else 0.0
+        if peak > 0.98:
+            y = y * (0.98 / peak)
+        return y
+
+    def run(self, audio, effects):
+        import numpy as np
+        import torch
+        lines = self._parse(effects)
+        if not lines:
+            return (audio,)
+        wav, sr = audio["waveform"], int(audio["sample_rate"])
+        base = self._input_dir()
+        outs = []
+        for i in range(wav.shape[0]):
+            x = wav[i].detach().cpu().float().numpy()
+            outs.append(torch.from_numpy(self._mix(x, sr, lines, base)))
+        return ({"waveform": torch.stack(outs).to(wav.dtype), "sample_rate": sr},)
+
+
+NODE_CLASS_MAPPINGS = {"AudioToVideoFrames": AudioToVideoFrames, "ResampleFrames": ResampleFrames, "AudioSpeed": AudioSpeed, "AudioSFXMix": AudioSFXMix}
+NODE_DISPLAY_NAME_MAPPINGS = {"AudioToVideoFrames": "Audio → Video Frames (4n+1)", "ResampleFrames": "Resample Frames (fps → fps)", "AudioSpeed": "Audio Speed (pitch preservado)", "AudioSFXMix": "Audio SFX Mix (efeitos por instante)"}
