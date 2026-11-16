@@ -72,20 +72,6 @@ MODELS = [
         "used": "Todos"
     },
     {
-        "name": "wan2.2_fun_control_high_noise_14B_fp8_scaled.safetensors",
-        "url":  "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_fun_control_high_noise_14B_fp8_scaled.safetensors",
-        "dest": f"{BASE}/diffusion_models",
-        "size": "14.3 GB",
-        "used": "1A e 2"
-    },
-    {
-        "name": "wan2.2_fun_control_low_noise_14B_fp8_scaled.safetensors",
-        "url":  "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_fun_control_low_noise_14B_fp8_scaled.safetensors",
-        "dest": f"{BASE}/diffusion_models",
-        "size": "14.3 GB",
-        "used": "1A e 2"
-    },
-    {
         "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
         "url":  "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
         "dest": f"{BASE}/diffusion_models",
@@ -131,11 +117,8 @@ MODELS = [
 
 # ── LISTA DE WORKFLOWS ────────────────────────────────────────
 WORKFLOWS = [
-    {"name": "1A_divulgacao_produto_COM_referencia.json", "url": f"{RAW}/1A_divulgacao_produto_COM_referencia.json", "desc": "Divulgação COM referência"},
     {"name": "1B_divulgacao_produto_SEM_referencia.json", "url": f"{RAW}/1B_divulgacao_produto_SEM_referencia.json", "desc": "Divulgação SEM referência"},
-    {"name": "2_dancinha_engajamento_seguidores.json", "url": f"{RAW}/2_dancinha_engajamento_seguidores.json", "desc": "Dancinha"},
-    {"name": "tiktok_3_cenas_ids_reais.json", "url": f"{RAW}/tiktok_3_cenas_ids_reais.json", "desc": "3 cenas (gancho/corpo/CTA)"},
-    {"name": "tiktok_3_cenas_chaining.json", "url": f"{RAW}/tiktok_3_cenas_chaining.json", "desc": "3 cenas com chaining (teste)"},
+    {"name": "30s_foto_por_cena.json", "url": f"{RAW}/experimental/30s_foto_por_cena.json", "desc": "30 s: voz Qwen + efeitos + 1 foto e 1 prompt por cena (720x1280, 30 fps)"},
     {"name": "wan22_t2v_foto_voz.json", "url": f"{RAW}/wan22_t2v_foto_voz.json", "desc": "T2V + foto + voz Qwen3 TTS + LipSync (30 s)"},
     {"name": "wan22_t2v_foto_voz_22s.json", "url": f"{RAW}/wan22_t2v_foto_voz_22s.json", "desc": "T2V + voz + LipSync (ate 22 s, 3 segmentos)"},
     {"name": "wan22_t2v_foto_voz_15s.json", "url": f"{RAW}/wan22_t2v_foto_voz_15s.json", "desc": "T2V + voz + LipSync (ate 15 s, 2 segmentos)"},
