@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 # Instalacao completa em pod novo (idempotente). Uso: bash /workspace/tiktokshop-sofii-hexx/bootstrap.sh
-B=/workspace/runpod-slim/ComfyUI
-PY=$B/.venv-cu128/bin/python
+B=${COMFY:-/workspace/runpod-slim/ComfyUI}   # COMFY=/caminho/ComfyUI bash bootstrap.sh  (outro template)
+export COMFY=$B
+if [ -x "$B/.venv-cu128/bin/python" ]; then PY=$B/.venv-cu128/bin/python; VENV=$B/.venv-cu128
+elif [ -x "$B/venv/bin/python" ]; then PY=$B/venv/bin/python; VENV=$B/venv
+else PY=$(command -v python3); VENV=""; fi
 REPO=/workspace/tiktokshop-sofii-hexx
-[ -x "$PY" ] || { echo "ERRO: $PY nao existe (ComfyUI/venv nao inicializado neste pod)"; exit 1; }
-source $B/.venv-cu128/bin/activate
+[ -f "$B/main.py" ] || { echo "ERRO: $B/main.py nao existe (ComfyUI nao encontrado; use COMFY=/caminho/ComfyUI)"; exit 1; }
+[ -n "$VENV" ] && source $VENV/bin/activate
 cd $REPO && git pull -q
 
 echo "== 1/5 setup.py (custom nodes, modelos, LoRAs, FILM, workflows) =="
@@ -54,7 +57,7 @@ if changed: open(p,"w").write(s)
 PYEOF
 
 echo "== 4/5 ldconfig (NPP CUDA 13 p/ torchcodec) =="
-echo "$B/.venv-cu128/lib/python3.12/site-packages/nvidia/cu13/lib" > /etc/ld.so.conf.d/nvidia-cu13.conf && ldconfig
+[ -n "$VENV" ] && { echo "$VENV/lib/python3.12/site-packages/nvidia/cu13/lib" > /etc/ld.so.conf.d/nvidia-cu13.conf && ldconfig; }
 $PY -c "import torchcodec;print('torchcodec ok',torchcodec.__version__)" 2>&1 | tail -1
 
 echo "== 5/5 iniciando ComfyUI =="

@@ -7,7 +7,7 @@ import time
 #  Autor: Roger
 # ============================================================
 
-COMFY  = "/workspace/runpod-slim/ComfyUI"
+COMFY  = os.environ.get("COMFY", "/workspace/runpod-slim/ComfyUI")   # COMFY=/caminho/ComfyUI python3 setup.py  (outro template)
 BASE   = f"{COMFY}/models"
 WF_DIR = f"{COMFY}/user/default/workflows"
 NODES  = f"{COMFY}/custom_nodes"

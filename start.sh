@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # Use em todo boot de pod (ldconfig se perde ao reiniciar o container). Uso: bash /workspace/tiktokshop-sofii-hexx/start.sh
-B=/workspace/runpod-slim/ComfyUI
-PY=$B/.venv-cu128/bin/python
-echo "$B/.venv-cu128/lib/python3.12/site-packages/nvidia/cu13/lib" > /etc/ld.so.conf.d/nvidia-cu13.conf && ldconfig
+B=${COMFY:-/workspace/runpod-slim/ComfyUI}   # COMFY=/caminho/ComfyUI bash start.sh  (outro template)
+if [ -x "$B/.venv-cu128/bin/python" ]; then PY=$B/.venv-cu128/bin/python; VENV=$B/.venv-cu128
+elif [ -x "$B/venv/bin/python" ]; then PY=$B/venv/bin/python; VENV=$B/venv
+else PY=$(command -v python3); VENV=""; fi
+[ -n "$VENV" ] && { echo "$VENV/lib/python3.12/site-packages/nvidia/cu13/lib" > /etc/ld.so.conf.d/nvidia-cu13.conf && ldconfig; }
 pkill -9 -f "main.py" 2>/dev/null; sleep 3
 # videos e temporarios saem do Network Volume (disco do container, apagado ao desligar o pod: baixe o mp4 antes)
 mkdir -p /tmp/comfy_out /tmp/comfy_tmp
