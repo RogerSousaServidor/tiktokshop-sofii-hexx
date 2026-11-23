@@ -2,7 +2,7 @@
   "id": "wan22-t2v-foto-voz-lipsync",
   "revision": 1,
   "last_node_id": 820,
-  "last_link_id": 677,
+  "last_link_id": 680,
   "version": 0.4,
   "config": {},
   "extra": {
@@ -33,7 +33,7 @@
         -20,
         740,
         2200,
-        640
+        680
       ],
       "color": "#3f8f3f",
       "font_size": 24,
@@ -886,7 +886,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "WORKFLOW ÁUDIO COM CORTES — 30 s COMPLETO (pronto para postar)\n\nANTES DE RODAR:\n1. Coloque o áudio de referência da Sofii (Sofii_audio_novo.m4a) em ComfyUI/input/. A voz é gerada aqui dentro (3 blocos Qwen3 TTS, cada um ≤ 20 s) e acelerada 1,08x.\n2. Coloque os efeitos (whoosh.wav, pop.wav, notificacao.wav...) em ComfyUI/input/sfx/ e ajuste os tempos no node 🔊 (uma linha: segundos, arquivo, volume).\n3. Coloque UMA FOTO POR CENA nos 4 nodes 📸 (cena 1 sem produto; cenas 2-4 com produto) e ajuste o prompt de movimento de cada cena.\n4. Queue. Saída: 720x1280, 30 fps, com voz + efeitos. Legenda: aplicar no TikTok.\n\nRequer o custom node audio_frames atualizado (setup.py/bootstrap.sh baixam do GitHub).\n\n———— ENGLISH ————\nFULL 30 s PROFILE (ready to post)\n1. Put the Sofii reference audio (Sofii_audio_novo.m4a) in ComfyUI/input/. The voice is generated inside this workflow (3 Qwen3 TTS blocks, each ≤ 20 s) and sped up 1.08x.\n2. Put sound effects in ComfyUI/input/sfx/ and set timings in the 🔊 node (one line each: seconds, file, volume).\n3. Put ONE PHOTO PER SCENE in the 4 📸 nodes (scene 1 no product; scenes 2-4 with product) and adjust each scene's motion prompt.\n4. Queue. Output: 720x1280, 30 fps, voice + effects. Captions: add in TikTok.\nRequires the updated audio_frames custom node (setup.py/bootstrap.sh fetch it from GitHub)."
+        "WORKFLOW ÁUDIO COM CORTES — 30 s COMPLETO (pronto para postar)\n\nANTES DE RODAR:\n1. Coloque o áudio de referência da Sofii (Sofii_audio_novo.m4a) em ComfyUI/input/. A voz é gerada aqui dentro (3 blocos Qwen3 TTS, cada um ≤ 20 s) e acelerada 1,08x.\n2. Coloque os efeitos (whoosh.wav, pop.wav, notificacao.wav...) em ComfyUI/input/sfx/. O node 🔊 toca `corte_sfx` sozinho em todo corte de cena (a cada 7,5 s) e aceita linhas extras: \"tempo, arquivo, volume\", onde tempo = segundos, blocoN (início do bloco de voz N), ou fim. Ex.: bloco3+0.2, pop.wav, 0.6. Mantenha `speed` igual ao do AudioSpeed (1,08).\n3. Coloque UMA FOTO POR CENA nos 4 nodes 📸 (cena 1 sem produto; cenas 2-4 com produto) e ajuste o prompt de movimento de cada cena.\n4. Queue. Saída: 720x1280, 30 fps, com voz + efeitos. Legenda: aplicar no TikTok.\n\nRequer o custom node audio_frames atualizado (setup.py/bootstrap.sh baixam do GitHub).\n\n———— ENGLISH ————\nFULL 30 s PROFILE (ready to post)\n1. Put the Sofii reference audio (Sofii_audio_novo.m4a) in ComfyUI/input/. The voice is generated inside this workflow (3 Qwen3 TTS blocks, each ≤ 20 s) and sped up 1.08x.\n2. Put sound effects in ComfyUI/input/sfx/. The 🔊 node plays `corte_sfx` automatically at every scene cut (every 7.5 s) and accepts extra lines: \"time, file, volume\", where time = seconds, blockN (start of voice block N) or fim (end). E.g.: bloco3+0.2, pop.wav, 0.6. Keep `speed` equal to the AudioSpeed value (1.08).\n3. Put ONE PHOTO PER SCENE in the 4 📸 nodes (scene 1 no product; scenes 2-4 with product) and adjust each scene's motion prompt.\n4. Queue. Output: 720x1280, 30 fps, voice + effects. Captions: add in TikTok.\nRequires the updated audio_frames custom node (setup.py/bootstrap.sh fetch it from GitHub)."
       ]
     },
     {
@@ -2149,14 +2149,14 @@
     {
       "id": 813,
       "type": "AudioSFXMix",
-      "title": "🔊 EFEITOS SONOROS (arquivos em input/sfx/)",
+      "title": "🔊 EFEITOS — automático nos cortes (7,5 s) + lista",
       "pos": [
         1020,
         1140
       ],
       "size": [
         420,
-        200
+        260
       ],
       "flags": {},
       "order": 0,
@@ -2166,6 +2166,21 @@
           "name": "audio",
           "type": "AUDIO",
           "link": 677
+        },
+        {
+          "name": "bloco1",
+          "type": "AUDIO",
+          "link": 678
+        },
+        {
+          "name": "bloco2",
+          "type": "AUDIO",
+          "link": 679
+        },
+        {
+          "name": "bloco3",
+          "type": "AUDIO",
+          "link": 680
         }
       ],
       "outputs": [
@@ -2182,7 +2197,11 @@
         "Node name for S&R": "AudioSFXMix"
       },
       "widgets_values": [
-        "# segundos, arquivo, volume\n0.3, whoosh.wav, 0.5\n15.0, pop.wav, 0.6\n28.0, notificacao.wav, 0.5"
+        "# tempo (s) ou blocoN(+/-s) ou fim(+/-s), arquivo, volume\n0.3, whoosh.wav, 0.5\nbloco3, pop.wav, 0.6",
+        1.08,
+        "whoosh.wav",
+        7.5,
+        0.5
       ]
     },
     {
@@ -2513,7 +2532,8 @@
           "type": "AUDIO",
           "slot_index": 0,
           "links": [
-            672
+            672,
+            678
           ]
         }
       ],
@@ -2569,7 +2589,8 @@
           "type": "AUDIO",
           "slot_index": 0,
           "links": [
-            673
+            673,
+            679
           ]
         }
       ],
@@ -2625,7 +2646,8 @@
           "type": "AUDIO",
           "slot_index": 0,
           "links": [
-            675
+            675,
+            680
           ]
         }
       ],
@@ -3609,6 +3631,30 @@
       0,
       813,
       0,
+      "AUDIO"
+    ],
+    [
+      678,
+      305,
+      0,
+      813,
+      1,
+      "AUDIO"
+    ],
+    [
+      679,
+      306,
+      0,
+      813,
+      2,
+      "AUDIO"
+    ],
+    [
+      680,
+      307,
+      0,
+      813,
+      3,
       "AUDIO"
     ]
   ]
