@@ -156,6 +156,42 @@ for wf in WORKFLOWS:
     print(f"\n  → {wf['desc']}")
     os.system(f'wget -q -O "{WF_DIR}/{wf["name"]}" "{wf["url"]}"')
 
+# ── EFEITOS SONOROS PADRAO (gerados com ffmpeg, sem direitos autorais) ─────────
+# Usados pelo node AudioSFXMix. Nao sobrescreve arquivos que ja existem em input/sfx/ (troque pelos seus quando quiser).
+print("\n" + "=" * 60)
+print("🔊 EFEITOS SONOROS PADRAO (input/sfx)")
+print("=" * 60)
+import shutil, subprocess
+SFX_DIR = f"{COMFY}/input/sfx"
+os.makedirs(SFX_DIR, exist_ok=True)
+_ff = shutil.which("ffmpeg")
+if not _ff:
+    try:
+        import imageio_ffmpeg
+        _ff = imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:
+        _ff = None
+SFX = {
+    # swoosh: ruido rosa filtrado com subida e descida suaves (0,7 s)
+    "whoosh.wav": ["-f", "lavfi", "-i", "anoisesrc=color=pink:duration=0.7:amplitude=0.9:sample_rate=44100",
+                   "-af", "highpass=f=250,lowpass=f=5000,afade=t=in:d=0.3,afade=t=out:st=0.3:d=0.4,volume=3.5,alimiter=limit=0.9"],
+    # pop: seno curto com queda rapida de frequencia e volume (0,2 s)
+    "pop.wav": ["-f", "lavfi", "-i", "aevalsrc=sin(2*PI*(600+1800*exp(-t*45))*t)*exp(-t*22):d=0.2:s=44100",
+                "-af", "volume=0.9"],
+    # notificacao: dois tons (880 Hz e 1320 Hz), 0,5 s no total
+    "notificacao.wav": ["-f", "lavfi", "-i", "aevalsrc=if(lt(t\\,0.18)\\,sin(2*PI*880*t)\\,sin(2*PI*1320*t))*exp(-3*mod(t\\,0.18)/0.18)*0.6:d=0.5:s=44100"],
+}
+if _ff is None:
+    print("  ⚠️  ffmpeg nao encontrado — coloque seus efeitos manualmente em", SFX_DIR)
+else:
+    for nome, args in SFX.items():
+        destino = os.path.join(SFX_DIR, nome)
+        if os.path.exists(destino) and os.path.getsize(destino) > 1000:
+            print(f"  ⏭️  Já existe: {nome} — mantendo")
+            continue
+        r = subprocess.run([_ff, "-y", "-v", "error", *args, "-ac", "2", "-ar", "44100", destino], capture_output=True, text=True)
+        print(f"  ✅ Gerado: {nome}" if r.returncode == 0 else f"  ❌ ERRO ao gerar {nome}: {r.stderr.strip()[:200]}")
+
 # ── VERIFICAÇÃO FINAL ─────────────────────────────────────────
 print("\n" + "=" * 60)
 print("🔍 VERIFICANDO TUDO...")
