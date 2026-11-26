@@ -2198,7 +2198,7 @@
       },
       "widgets_values": [
         "# tempo (s) ou blocoN(+/-s) ou fim(+/-s), arquivo, volume\n0.3, whoosh.wav, 0.5\nbloco3, pop.wav, 0.6",
-        1.08,
+        1.07,
         "whoosh.wav",
         7.5,
         0.5
@@ -2791,7 +2791,7 @@
         "Node name for S&R": "AudioSpeed"
       },
       "widgets_values": [
-        1.08
+        1.07
       ]
     },
     {
