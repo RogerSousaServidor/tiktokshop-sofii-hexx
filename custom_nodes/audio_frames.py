@@ -223,5 +223,65 @@ class AudioSFXMix:
         return ({"waveform": torch.stack(outs).to(wav.dtype), "sample_rate": sr},)
 
 
-NODE_CLASS_MAPPINGS = {"AudioToVideoFrames": AudioToVideoFrames, "ResampleFrames": ResampleFrames, "AudioSpeed": AudioSpeed, "AudioSFXMix": AudioSFXMix}
-NODE_DISPLAY_NAME_MAPPINGS = {"AudioToVideoFrames": "Audio → Video Frames (4n+1)", "ResampleFrames": "Resample Frames (fps → fps)", "AudioSpeed": "Audio Speed (pitch preservado)", "AudioSFXMix": "Audio SFX Mix (efeitos por instante)"}
+class ZoomPunch:
+    """Zoom 'punch-in' por frame, com tempo exato (sincroniza com os SFX).
+    Cada tempo em 'inicios' (segundos, separados por virgula) dispara um zoom 1.0 -> 'zoom' em 'duracao' s
+    (ease-out: comeca rapido e assenta). 'volta' > 0: depois relaxa de volta a 1.0 em 'volta' s; 0 = mantem ate o proximo disparo.
+    Recorta o centro e reamostra (bicubico) direto para out_w x out_h: substitui o node de upscale (uma unica reamostragem)."""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {
+            "images": ("IMAGE",),
+            "inicios": ("STRING", {"default": "0, 7.5625, 15.0625, 22.5625"}),
+            "zoom": ("FLOAT", {"default": 1.25, "min": 1.0, "max": 3.0, "step": 0.01}),
+            "duracao": ("FLOAT", {"default": 0.25, "min": 0.03, "max": 3.0, "step": 0.01}),
+            "volta": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 5.0, "step": 0.05}),
+            "fps": ("FLOAT", {"default": 30.0, "min": 1.0, "max": 120.0}),
+            "out_w": ("INT", {"default": 720, "min": 16, "max": 4096}),
+            "out_h": ("INT", {"default": 1280, "min": 16, "max": 4096}),
+        }}
+
+    RETURN_TYPES = ("IMAGE",)
+    RETURN_NAMES = ("images",)
+    FUNCTION = "run"
+    CATEGORY = "image/batch"
+
+    @staticmethod
+    def zoom_at(t, starts, zoom, dur, volta):
+        """Fator de zoom no instante t (s). starts: lista ordenada de disparos."""
+        prev = [s for s in starts if s <= t + 1e-9]
+        if not prev:
+            return 1.0
+        e = t - prev[-1]
+        u = min(max(e / dur, 0.0), 1.0)
+        k = 1.0 - (1.0 - u) ** 3                       # ease-out cubico
+        if volta > 0 and e > dur:
+            v = min((e - dur) / volta, 1.0)
+            k *= 1.0 - (v * v * (3 - 2 * v))           # smoothstep de volta
+        return 1.0 + (zoom - 1.0) * k
+
+    def run(self, images, inicios, zoom, duracao, volta, fps, out_w, out_h):
+        import torch
+        import torch.nn.functional as F
+        starts = sorted(float(x) for x in inicios.replace(";", ",").split(",") if x.strip())
+        n, h, w, c = images.shape
+        out = torch.empty((n, out_h, out_w, c), dtype=images.dtype)
+        zs = [self.zoom_at(i / fps, starts, zoom, duracao, volta) for i in range(n)]
+        dev = images.device
+        # grade de saida normalizada [-1,1]; escala = 1/zoom recorta o centro (aspecto da saida = aspecto da entrada)
+        ys = torch.linspace(-1 + 1.0 / out_h, 1 - 1.0 / out_h, out_h, device=dev)
+        xs = torch.linspace(-1 + 1.0 / out_w, 1 - 1.0 / out_w, out_w, device=dev)
+        gy, gx = torch.meshgrid(ys, xs, indexing="ij")
+        for a in range(0, n, 16):
+            b = min(a + 16, n)
+            x = images[a:b].permute(0, 3, 1, 2).float()
+            z = torch.tensor(zs[a:b], device=dev, dtype=torch.float32).view(-1, 1, 1)
+            grid = torch.stack([gx[None] / z, gy[None] / z], dim=-1)
+            y = F.grid_sample(x, grid, mode="bicubic", padding_mode="border", align_corners=False)
+            out[a:b] = y.clamp(0, 1).permute(0, 2, 3, 1).to(images.dtype).cpu()
+        return (out,)
+
+
+NODE_CLASS_MAPPINGS = {"AudioToVideoFrames": AudioToVideoFrames, "ResampleFrames": ResampleFrames, "AudioSpeed": AudioSpeed, "AudioSFXMix": AudioSFXMix, "ZoomPunch": ZoomPunch}
+NODE_DISPLAY_NAME_MAPPINGS = {"AudioToVideoFrames": "Audio → Video Frames (4n+1)", "ResampleFrames": "Resample Frames (fps → fps)", "AudioSpeed": "Audio Speed (pitch preservado)", "AudioSFXMix": "Audio SFX Mix (efeitos por instante)", "ZoomPunch": "Zoom Punch (por tempo, com upscale)"}

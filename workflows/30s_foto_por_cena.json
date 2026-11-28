@@ -1,7 +1,7 @@
 {
   "id": "wan22-t2v-foto-voz-lipsync",
   "revision": 1,
-  "last_node_id": 820,
+  "last_node_id": 830,
   "last_link_id": 680,
   "version": 0.4,
   "config": {},
@@ -2149,7 +2149,7 @@
     {
       "id": 813,
       "type": "AudioSFXMix",
-      "title": "🔊 EFEITOS — automático nos cortes (7,5 s) + lista",
+      "title": "🔊 EFEITOS — cortes manuais (pico do whoosh = corte) + lista",
       "pos": [
         1020,
         1140
@@ -2197,52 +2197,11 @@
         "Node name for S&R": "AudioSFXMix"
       },
       "widgets_values": [
-        "# tempo (s) ou blocoN(+/-s) ou fim(+/-s), arquivo, volume\n0.3, whoosh.wav, 0.5\nbloco3, pop.wav, 0.6",
+        "# tempo (s) ou blocoN(+/-s) ou fim(+/-s), arquivo, volume\n# whoosh: pico em +0.30 s do inicio -> inicio = corte - 0.30 (cortes em 7.5625 / 15.0625 / 22.5625)\n0.0, whoosh.wav, 0.5\n7.2625, whoosh.wav, 0.5\n7.5625, pop.wav, 0.6\n14.7625, whoosh.wav, 0.5\n22.2625, whoosh.wav, 0.5\nbloco3, notificacao.wav, 0.6",
         1.07,
-        "whoosh.wav",
-        7.5,
+        "",
+        0,
         0.5
-      ]
-    },
-    {
-      "id": 814,
-      "type": "ImageScale",
-      "title": "📐 Upscale Lanczos 720x1280",
-      "pos": [
-        380,
-        3460
-      ],
-      "size": [
-        320,
-        130
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 655
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            656
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ImageScale"
-      },
-      "widgets_values": [
-        "lanczos",
-        720,
-        1280,
-        "disabled"
       ]
     },
     {
@@ -2829,6 +2788,53 @@
       },
       "widgets_values": [
         "Será que vai demorar muito para sua ficha cair que eu sou apaixonada por você e que eu só quero você? Você já sentiu que o cérebro simplesmente trava no meio do dia? Essa névoa mental constante destrói sua produtividade e esgota sua energia sem você perceber. Isso acaba agora. Quer recuperar sua clareza de forma definitiva? O link com desconto exclusivo está aqui na sacolinha do TikTok Shop, garanta o seu antes que acabe."
+      ]
+    },
+    {
+      "id": 830,
+      "type": "ZoomPunch",
+      "title": "🔍 ZOOM PUNCH — dispara nos cortes + upscale 720x1280",
+      "pos": [
+        380,
+        3460
+      ],
+      "size": [
+        360,
+        230
+      ],
+      "color": "#4a2a1a",
+      "bgcolor": "#2a1a0a",
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 655
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            656
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ZoomPunch"
+      },
+      "widgets_values": [
+        "0, 7.5625, 15.0625, 22.5625",
+        1.25,
+        0.25,
+        0.0,
+        30.0,
+        720,
+        1280
       ]
     }
   ],
@@ -3453,13 +3459,13 @@
       655,
       513,
       0,
-      814,
+      830,
       0,
       "IMAGE"
     ],
     [
       656,
-      814,
+      830,
       0,
       331,
       0,
