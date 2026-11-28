@@ -192,6 +192,19 @@ else:
         r = subprocess.run([_ff, "-y", "-v", "error", *args, "-ac", "2", "-ar", "44100", destino], capture_output=True, text=True)
         print(f"  ✅ Gerado: {nome}" if r.returncode == 0 else f"  ❌ ERRO ao gerar {nome}: {r.stderr.strip()[:200]}")
 
+# ── VOZ DE REFERENCIA DA SOFII (usada pelo LoadAudio dos workflows Qwen3 TTS) ─────────
+# Baixa para input/ so se ainda nao existir (para trocar a voz, substitua o arquivo em input/ ou em assets/ no GitHub).
+print("\n" + "=" * 60)
+print("🎤 VOZ DE REFERENCIA (input/Sofii_audio_novo.m4a)")
+print("=" * 60)
+VOZ = f"{COMFY}/input/Sofii_audio_novo.m4a"
+os.makedirs(f"{COMFY}/input", exist_ok=True)
+if os.path.exists(VOZ) and os.path.getsize(VOZ) > 1000:
+    print("  ⏭️  Já existe: Sofii_audio_novo.m4a — mantendo")
+else:
+    os.system(f'wget -q -O "{VOZ}" "{RAW.rsplit("/workflows", 1)[0]}/assets/Sofii_audio_novo.m4a"')
+    print("  ✅ Baixado: Sofii_audio_novo.m4a" if os.path.exists(VOZ) and os.path.getsize(VOZ) > 1000 else "  ❌ ERRO ao baixar Sofii_audio_novo.m4a")
+
 # ── VERIFICAÇÃO FINAL ─────────────────────────────────────────
 print("\n" + "=" * 60)
 print("🔍 VERIFICANDO TUDO...")
